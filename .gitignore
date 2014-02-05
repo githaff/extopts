@@ -6,6 +6,10 @@
 /config.h
 Makefile
 libtool
+Makefile.in
+configure
+config.h.in
+aclocal.m4
 *~
 *.o
 *.la
