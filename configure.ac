@@ -17,8 +17,8 @@ dnl ################################################################
 dnl # Version information
 dnl ################################################################
 LIBEXTOPTS_MAJOR_VERSION=0
-LIBEXTOPTS_MINOR_VERSION=7
-LIBEXTOPTS_MICRO_VERSION=6
+LIBEXTOPTS_MINOR_VERSION=9
+LIBEXTOPTS_MICRO_VERSION=5
 LIBEXTOPTS_DEVEL_VERSION=0
 
 AC_SUBST(LIBEXTOPTS_MAJOR_VERSION)
@@ -50,7 +50,7 @@ dnl #  ? : +1 :  ?   == internal changes that doesn't break anything.
 dnl #
 dnl # CURRENT : REVISION : AGE
 dnl #
-LT_CURRENT=4
+LT_CURRENT=5
 LT_REVISION=0
 LT_AGE=0
 
