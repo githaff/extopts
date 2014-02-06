@@ -50,7 +50,7 @@ dnl #  ? : +1 :  ?   == internal changes that doesn't break anything.
 dnl #
 dnl # CURRENT : REVISION : AGE
 dnl #
-LT_CURRENT=5
+LT_CURRENT=1
 LT_REVISION=0
 LT_AGE=0
 
