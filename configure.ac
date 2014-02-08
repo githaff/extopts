@@ -88,6 +88,7 @@ dnl ################################################################
 AC_CONFIG_FILES([
 Makefile
 libextopts/Makefile
+example/Makefile
 ])
 
 AC_OUTPUT
