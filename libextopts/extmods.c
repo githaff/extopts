@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "extopts.h"
-#include "extmods.h"
+#include "extopts/extopts.h"
+#include "extopts/extmods.h"
 
 extern struct extmod __start___extmods[];
 extern struct extmod __stop___extmods[];

@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "extopts.h"
+#include "extopts/extopts.h"
 
 
 /*

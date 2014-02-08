@@ -2,7 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-#include "extopts.h"
+#include "extopts/extopts.h"
 
 
 #define BUF_SIZE 1024
