@@ -293,7 +293,10 @@ end:
 
 /*
  * Parse command line arguments.
- */
+ *
+ * Note: this function takes standard command line arguments starting
+ * from executable path in argv[0].
+  */
 int get_extopts(int argc, char *argv[], struct extopt *opts)
 {
     int ret = 0;
@@ -305,7 +308,6 @@ int get_extopts(int argc, char *argv[], struct extopt *opts)
     char *rest[255];
     int rest_size = 0;
 
-
     if (validate_extopts(opts)) {
         ret = -1;
         goto err;
@@ -313,7 +315,7 @@ int get_extopts(int argc, char *argv[], struct extopt *opts)
 
     empty_noargers(opts);
 
-    for (i = 0; i < argc; i++) {
+    for (i = 1; i < argc; i++) {
         if (wait_optarg) {
             optarg = argv[i];
 
