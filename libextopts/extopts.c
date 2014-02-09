@@ -256,29 +256,38 @@ void empty_noargers(struct extopt *opts)
  */
 struct extopt *find_opt(char *opt_str, struct extopt *opts)
 {
-    int i = 0;
+    int i;
     struct extopt *opt = 0;
-    char shortopt_str[] = "-X";
 
-    while (1) {
-        if (opt_is_end(opts[i]))
-            break;
-
-        shortopt_str[1] = opts[i].name_short;
-		if (!strncmp(opt_str, shortopt_str, 2)) {
-			opt = &opts[i];
-			break;
+	/* Check long opts */
+	if (opt_str[0] == '-' && opt_str[1] == '-') {
+		i = 0;
+		while (1) {
+			if (opt_is_end(opts[i]))
+				break;
+			if (!strcmp(opt_str + 2, opts[i].name_long)) {
+				opt = &opts[i];
+				break;
+			}
+			i++;
 		}
-
-        if (opt_str[0] == '-' && opt_str[1] == '-' &&
-			!strcmp(opt_str + 2, opts[i].name_long)) {
-            opt = &opts[i];
-			break;
-		}
-
-        i++;
     }
 
+	/* Check short opts */
+	if (opt_str[0] == '-') {
+		i = 0;
+		while (1) {
+			if (opt_is_end(opts[i]))
+				break;
+			if (opt_str[1] == opts[i].name_short) {
+				opt = &opts[i];
+				goto end;
+			}
+			i++;
+		}
+	}
+
+end:
     return opt;
 }
 

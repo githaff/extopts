@@ -36,11 +36,11 @@ struct extopt test_opts[] = {
 		EXTOPT_ARG_INT("INT", &opts_int),
 		.desc = "int option",
 	}, {
-		.name_long = "long-int",
+		.name_long = "lint",
 		EXTOPT_ARG_LINT("LINT", &opts_lint),
 		.desc = "long int option",
 	}, {
-		.name_long = "long-long-int",
+		.name_long = "llint",
 		EXTOPT_ARG_LLINT("LLINT", &opts_llint),
 		.desc = "long long int option",
 	}, {
