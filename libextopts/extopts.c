@@ -265,9 +265,16 @@ struct extopt *find_opt(char *opt_str, struct extopt *opts)
             break;
 
         shortopt_str[1] = opts[i].name_short;
-        if (!strncmp(opt_str, shortopt_str, 2) ||
-            !strcmp(opt_str, opts[i].name_long))
+		if (!strncmp(opt_str, shortopt_str, 2)) {
+			opt = &opts[i];
+			break;
+		}
+
+        if (opt_str[0] == '-' && opt_str[1] == '-' &&
+			!strcmp(opt_str + 2, opts[i].name_long)) {
             opt = &opts[i];
+			break;
+		}
 
         i++;
     }
@@ -312,7 +319,7 @@ int get_extopts(int argc, char *argv[], struct extopt *opts)
             wait_optarg = 0;
         } else {
             optkey = argv[i];
-            
+
             opt = find_opt(optkey, opts);
             if (opt)
                 wait_optarg = opt->has_arg;
