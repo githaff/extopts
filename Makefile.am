@@ -2,7 +2,7 @@
 
 ACLOCAL_AMFLAGS = -I m4 ${ACLOCAL_FLAGS}
 
-SUBDIRS = libextopts
+SUBDIRS = libextopts example
 
 $(OBJECTS): libtool
 libtool: $(LIBTOOL_DEPS)
