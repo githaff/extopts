@@ -1,7 +1,6 @@
 #ifndef __CMDARGS_H
 #define __CMDARGS_H
 
-
 extern int opts_help;
 extern int opts_int;
 extern long opts_lint;
@@ -18,6 +17,5 @@ extern char opts_symb;
 extern int opts_special_val;
 
 extern struct extopt test_opts[];
-
 
 #endif /* __CMDARGS_H */

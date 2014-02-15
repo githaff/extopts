@@ -1,7 +1,6 @@
 #ifndef __EXTMODS_H
 #define __EXTMODS_H
 
-
 struct extopt;
 
 /*
@@ -31,6 +30,5 @@ inline static char mod_is_end(struct extmod opt)
 
 struct extmod *extmod_find(char *name);
 int module_exec(int argc, char *argv[], struct extmod *module);
-
 
 #endif /* __EXTMODS_H */

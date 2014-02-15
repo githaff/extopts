@@ -1,7 +1,3 @@
-#ifndef __EXTOPTS_H
-#define __EXTOPTS_H
-
-
 /*
  * Extended Options management.
  *
@@ -18,6 +14,8 @@
  * compatible).
  */
 
+#ifndef __EXTOPTS_H
+#define __EXTOPTS_H
 
 /*
  * Types of option argument.
@@ -178,6 +176,5 @@ inline static char opt_is_end(struct extopt opt)
 		opt.arg_type	== 0 &&
 		opt.arg.addr	== 0;
 }
-
 
 #endif /* __EXTOPTS_H */
