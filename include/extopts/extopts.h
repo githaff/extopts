@@ -174,11 +174,8 @@ struct extopt {
 /* Array functions */
 int extopts_get(int *argc, char *argv[], struct extopt *opts);
 void extopts_usage(struct extopt *opts);
-int extopts_validate(struct extopt *opts);
-int extopts_count(struct extopt *opts);
 struct extopt *extopts_find(char *opt_str, struct extopt *opts);
 /* Single extopt functions*/
-int extopt_is_ok(struct extopt *opt);
 inline static char extopt_is_end(struct extopt opt)
 {
 	return opt.name_long == 0 &&
