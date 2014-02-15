@@ -271,7 +271,7 @@ void empty_noargers(struct extopt *opts)
 /*
  * Find needed extopt
  */
-struct extopt *extopts_find(char *opt_str, struct extopt *opts)
+struct extopt *extopt_find(char *opt_str, struct extopt *opts)
 {
 	int i;
 	struct extopt *opt = 0;
@@ -355,7 +355,7 @@ int extopts_get(int *argc, char *argv[], struct extopt *opts)
 		if (arg_is_key(argv[i])) {
 			optkey = argv[i];
 
-			opt = extopts_find(optkey, opts);
+			opt = extopt_find(optkey, opts);
 			if (opt)
 				wait_optarg = opt->has_arg;
 			else {

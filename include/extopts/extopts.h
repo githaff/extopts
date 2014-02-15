@@ -174,7 +174,7 @@ struct extopt {
 /* Array functions */
 int extopts_get(int *argc, char *argv[], struct extopt *opts);
 void extopts_usage(struct extopt *opts);
-struct extopt *extopts_find(char *opt_str, struct extopt *opts);
+struct extopt *extopt_find(char *opt_str, struct extopt *opts);
 /* Single extopt functions*/
 inline static char extopt_is_end(struct extopt opt)
 {
