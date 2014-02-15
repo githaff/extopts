@@ -18,11 +18,15 @@ void test_usage(struct extopt *opts)
 
 int main(int argc, char *argv[])
 {
+	int i;
 	int ret = 0;
 	struct extmod *module;
 	int index;
 
-	index = get_extopts(argc, argv, test_opts);
+	int rest_argc;
+	char **rest_argv;
+
+	index = get_extopts(&argc, argv, test_opts);
 	if (index < 0) {
 		ret = 1;
 		goto err;
@@ -33,6 +37,12 @@ int main(int argc, char *argv[])
 		goto end;
 	}
 
+	printf("Passed arguments list:\n");
+	if (argc == 0)
+		printf("  --none--\n");
+	else
+		for (i = 0; i < argc; i++)
+			printf("  %s\n", argv[i]);
 	printf("Parameters read:\n");
 	printf("  opts_int = %d\n", opts_int);
 	printf("  opts_long = %ld\n", opts_lint);
@@ -51,6 +61,11 @@ int main(int argc, char *argv[])
 	printf("  opts_symb = %c\n", opts_symb);
 	printf("  \n");
 	printf("  opts_special_val = %d\n", opts_special_val);
+	printf("\n");
+	printf("Rest arguments list:\n");
+	for (i = 0; i < argc; i++)
+		printf(" %s", argv[i]);
+	printf("\n");
 	
 err:
 end:

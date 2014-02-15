@@ -291,13 +291,30 @@ end:
     return opt;
 }
 
+char arg_is_key(char *arg)
+{
+	return arg[0] == '-';
+}
+
 /*
  * Parse command line arguments.
  *
- * Note: this function takes standard command line arguments starting
- * from executable path in argv[0].
-  */
-int get_extopts(int argc, char *argv[], struct extopt *opts)
+ * This function takes standard command line arguments starting from
+ * executable path in argv[0].
+ *
+ * After processing argv will be rearranged so that:
+ * 1. all non-option arguments will be moved to the beginning of argv
+ *    starting from 0th argument;
+ * 2. 0th argument, path to application will be moved right after all
+ *    non-option arguments followed by options and their arguments. It
+ *    also will be stored to 'extpath' variable.
+ * 3. Short form of application name (its basename) will be stored at
+ *    'extname'. In case of module execution it will be changed to
+ *    format <APPNAME>-<MODNAME>.
+ * 4. value by argc address will contain number of these non-option
+ *    arguments.
+ */
+int get_extopts(int *argc, char *argv[], struct extopt *opts)
 {
     int ret = 0;
     char wait_optarg = 0;
@@ -305,8 +322,7 @@ int get_extopts(int argc, char *argv[], struct extopt *opts)
     int i;
     char *optkey;
     char *optarg;
-    char *rest[255];
-    int rest_size = 0;
+	int argc_new = 0;
 
     if (validate_extopts(opts)) {
         ret = -1;
@@ -315,8 +331,20 @@ int get_extopts(int argc, char *argv[], struct extopt *opts)
 
     empty_noargers(opts);
 
-    for (i = 1; i < argc; i++) {
-        if (wait_optarg) {
+    for (i = 1; i < *argc; i++) {
+		if (arg_is_key(argv[i])) {
+            optkey = argv[i];
+
+            opt = find_opt(optkey, opts);
+            if (opt)
+                wait_optarg = opt->has_arg;
+            else {
+                fprintf(stderr, "Error: unknown option '%s'.\n"
+						"Try --help for more information\n", optkey);
+				ret = -1;
+				goto err;
+			}
+		} else if (wait_optarg) {
             optarg = argv[i];
 
             ret = default_setter(opt, optarg);
@@ -329,16 +357,16 @@ int get_extopts(int argc, char *argv[], struct extopt *opts)
             }
             wait_optarg = 0;
         } else {
-            optkey = argv[i];
+			char *new_arg = argv[i];
+			int j;
 
-            opt = find_opt(optkey, opts);
-            if (opt)
-                wait_optarg = opt->has_arg;
-            else
-                rest[rest_size++] = argv[i];
+			for (j = i; j > argc_new; j--)
+				argv[j] = argv[j - 1];
+			argv[argc_new++] = new_arg;
         }
 	}
-    
+
+	*argc = argc_new;
 err:
 
     return ret;
