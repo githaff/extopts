@@ -23,9 +23,6 @@ int main(int argc, char *argv[])
 	struct extmod *module;
 	int index;
 
-	int rest_argc;
-	char **rest_argv;
-
 	index = extopts_get(&argc, argv, test_opts);
 	if (index < 0) {
 		ret = 1;
@@ -56,7 +53,7 @@ int main(int argc, char *argv[])
 	printf("  \n");
 	printf("  opts_float = %f\n", opts_float);
 	printf("  opts_double = %lf\n", opts_double);
-	printf("  opts_double_double = %llf\n", opts_ldouble);
+	printf("  opts_double_double = %Lf\n", opts_ldouble);
 	printf("  \n");
 	printf("  opts_str = %s\n", opts_str);
 	printf("  opts_alloc_str = %s\n", opts_alloc_str);
