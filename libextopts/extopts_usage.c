@@ -116,7 +116,7 @@ int get_desc_offset(struct extopt *opts, char *any_short)
 
 	i = 0;
 	while (1) {
-		if (opt_is_end(opts[i]))
+		if (extopt_is_end(opts[i]))
 			break;
 
 		len = get_opt_length(opts + i);
@@ -233,7 +233,7 @@ void extopts_usage(struct extopt *opts)
 
 	i = 0;
 	while (1) {
-		if (opt_is_end(opts[i]))
+		if (extopt_is_end(opts[i]))
 			break;
 
 		print_opt(opts + i, desc_offset, any_short);

@@ -15,9 +15,9 @@ char *extmodname;
  * It is automatically preformed before parsing command line
  * arguments.
  */
-int check_extopt(struct extopt *opt)
+int extopt_is_ok(struct extopt *opt)
 {
-	int ret = 0;
+	int ret = 1;
 	char opt_name_reserved[] = "<unnamed>";
 	char *opt_name;
 
@@ -31,18 +31,18 @@ int check_extopt(struct extopt *opt)
 
 	if (!opt->name_long && !opt->name_short) {
 		fprintf(stderr, "Error: '%s' extopt doesn't have any name.\n", opt_name);
-		ret = 1;
+		ret = 0;
 	}
 
 	if (!opt->arg.addr) {
 		fprintf(stderr, "Error: '%s' extopt has unspecified argument value\n", opt_name);
-		ret = 1;
+		ret = 0;
 	}
 
 	return ret;
 }
 
-int validate_extopts(struct extopt *opts)
+int extopts_validate(struct extopt *opts)
 {
 	int ret = 0;
 	int i;
@@ -50,10 +50,12 @@ int validate_extopts(struct extopt *opts)
 
 	i = 0;
 	while (1) {
-		if (opt_is_end(opts[i]))
+		if (extopt_is_end(opts[i]))
 			break;
-		if (check_extopt(&opts[i]))
+		if (!extopt_is_ok(&opts[i])) {
 			ret = 1;
+			goto err;
+		}
 		if (opts[i].name_short == 'h' &&
 			!strcmp(opts[i].name_long, "help"))
 			check_helpopt = 1;
@@ -66,19 +68,20 @@ int validate_extopts(struct extopt *opts)
 		fprintf(stderr, "BUG: no --help|-h option is implemented.\n");
 	}
 
+err:
 	return ret;
 }
 
 /*
  * Count number of extopts in array.
  */
-int count_extopts(struct extopt *opts)
+int extopts_count(struct extopt *opts)
 {
 	int i;
 
 	i = 0;
 	while (1) {
-		if (opt_is_end(opts[i]))
+		if (extopt_is_end(opts[i]))
 			break;
 		i++;
 	}
@@ -255,7 +258,7 @@ void empty_noargers(struct extopt *opts)
 	int i = 0;
 
 	while (1) {
-		if (opt_is_end(opts[i]))
+		if (extopt_is_end(opts[i]))
 			break;
 
 		if (opts[i].arg_type == EXTOPT_ARGTYPE_NO_ARG)
@@ -268,7 +271,7 @@ void empty_noargers(struct extopt *opts)
 /*
  * Find needed extopt
  */
-struct extopt *find_opt(char *opt_str, struct extopt *opts)
+struct extopt *extopts_find(char *opt_str, struct extopt *opts)
 {
 	int i;
 	struct extopt *opt = 0;
@@ -277,7 +280,7 @@ struct extopt *find_opt(char *opt_str, struct extopt *opts)
 	if (opt_str[0] == '-' && opt_str[1] == '-') {
 		i = 0;
 		while (1) {
-			if (opt_is_end(opts[i]))
+			if (extopt_is_end(opts[i]))
 				break;
 			if (!strcmp(opt_str + 2, opts[i].name_long)) {
 				opt = &opts[i];
@@ -291,7 +294,7 @@ struct extopt *find_opt(char *opt_str, struct extopt *opts)
 	if (opt_str[0] == '-') {
 		i = 0;
 		while (1) {
-			if (opt_is_end(opts[i]))
+			if (extopt_is_end(opts[i]))
 				break;
 			if (opt_str[1] == opts[i].name_short) {
 				opt = &opts[i];
@@ -328,7 +331,7 @@ char arg_is_key(char *arg)
  * 4. value by argc address will contain number of these non-option
  *    arguments.
  */
-int get_extopts(int *argc, char *argv[], struct extopt *opts)
+int extopts_get(int *argc, char *argv[], struct extopt *opts)
 {
 	int ret = 0;
 	char wait_optarg = 0;
@@ -338,7 +341,7 @@ int get_extopts(int *argc, char *argv[], struct extopt *opts)
 	char *optarg;
 	int argc_new = 0;
 
-	if (validate_extopts(opts)) {
+	if (extopts_validate(opts)) {
 		ret = -1;
 		goto err;
 	}
@@ -352,7 +355,7 @@ int get_extopts(int *argc, char *argv[], struct extopt *opts)
 		if (arg_is_key(argv[i])) {
 			optkey = argv[i];
 
-			opt = find_opt(optkey, opts);
+			opt = extopts_find(optkey, opts);
 			if (opt)
 				wait_optarg = opt->has_arg;
 			else {

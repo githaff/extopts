@@ -26,7 +26,7 @@ int main(int argc, char *argv[])
 	int rest_argc;
 	char **rest_argv;
 
-	index = get_extopts(&argc, argv, test_opts);
+	index = extopts_get(&argc, argv, test_opts);
 	if (index < 0) {
 		ret = 1;
 		goto err;

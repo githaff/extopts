@@ -171,15 +171,19 @@ struct extopt {
 	.arg_type = EXTOPT_ARGTYPE_SPECIAL,			\
 	.arg.setter = SETTER_FUNC
 
-
+/* Array functions */
+int extopts_get(int *argc, char *argv[], struct extopt *opts);
 void extopts_usage(struct extopt *opts);
-int get_extopts(int *argc, char *argv[], struct extopt *opts);
-
-inline static char opt_is_end(struct extopt opt)
+int extopts_validate(struct extopt *opts);
+int extopts_count(struct extopt *opts);
+struct extopt *extopts_find(char *opt_str, struct extopt *opts);
+/* Single extopt functions*/
+int extopt_is_ok(struct extopt *opt);
+inline static char extopt_is_end(struct extopt opt)
 {
 	return opt.name_long == 0 &&
 		opt.name_short	== 0 &&
-		opt.has_arg	== 0 &&
+		opt.has_arg		== 0 &&
 		opt.arg_name	== 0 &&
 		opt.desc		== 0 &&
 		opt.arg_type	== 0 &&
