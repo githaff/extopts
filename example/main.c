@@ -37,6 +37,8 @@ int main(int argc, char *argv[])
 		goto end;
 	}
 
+	printf("Application name: %s\n", extname);
+	printf("Application full path: %s\n", extpath);
 	printf("Passed arguments list:\n");
 	if (argc == 0)
 		printf("  --none--\n");

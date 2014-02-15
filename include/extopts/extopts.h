@@ -18,6 +18,15 @@
 #define __EXTOPTS_H
 
 /*
+ * Application name and path (taken from argv[0] during parsing).
+ * Module name (taken from argv[1] if arguments are passed to
+ * extmod_exec).
+ */
+extern char *extname;
+extern char *extpath;
+extern char *extmodname;
+
+/*
  * Types of option argument.
  * Defines the way argument will be written into @arg field of extopt
  * structure.

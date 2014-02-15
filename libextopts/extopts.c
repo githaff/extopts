@@ -1,9 +1,14 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <libgen.h>
 
 #include "extopts/extopts.h"
 
+
+char *extname;
+char *extpath;
+char *extmodname;
 
 /*
  * Check option for validity.
@@ -328,6 +333,9 @@ int get_extopts(int *argc, char *argv[], struct extopt *opts)
 		ret = -1;
 		goto err;
 	}
+
+	extpath = argv[0];
+	extname = basename(argv[0]);
 
 	empty_noargers(opts);
 
