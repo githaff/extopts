@@ -46,6 +46,7 @@ int validate_extopts(struct extopt *opts)
 {
 	int ret = 0;
 	int i;
+	char check_helpopt = 0;
 
 	i = 0;
 	while (1) {
@@ -53,8 +54,16 @@ int validate_extopts(struct extopt *opts)
 			break;
 		if (check_extopt(&opts[i]))
 			ret = 1;
+		if (opts[i].name_short == 'h' &&
+			!strcmp(opts[i].name_long, "help"))
+			check_helpopt = 1;
 
 		i++;
+	}
+
+	if (!check_helpopt) {
+		ret = 1;
+		fprintf(stderr, "BUG: no --help|-h option is implemented.\n");
 	}
 
 	return ret;
