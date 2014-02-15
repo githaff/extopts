@@ -1,5 +1,7 @@
 bin_PROGRAMS = example
 
 example_SOURCES = main.c cmdargs.c
-example_CFLAGS =-I$(top_srcdir)/include
+example_CFLAGS =				\
+	-std=c99 -Wpedantic -Wall -Wextra	\
+	-I$(top_srcdir)/include
 example_LDADD = ../libextopts/libextopts.la
