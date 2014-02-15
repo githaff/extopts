@@ -6,7 +6,7 @@
 
 /* Options */
 int opts_help;
-int			opts_int;
+int		opts_int;
 long		opts_lint;
 long long	opts_llint;
 unsigned 			opts_uint;

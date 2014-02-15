@@ -61,12 +61,7 @@ int main(int argc, char *argv[])
 	printf("  opts_symb = %c\n", opts_symb);
 	printf("  \n");
 	printf("  opts_special_val = %d\n", opts_special_val);
-	printf("\n");
-	printf("Rest arguments list:\n");
-	for (i = 0; i < argc; i++)
-		printf(" %s", argv[i]);
-	printf("\n");
-	
+
 err:
 end:
 
