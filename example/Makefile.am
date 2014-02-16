@@ -1,4 +1,4 @@
-noinst_PROGRAMS = example
+EXTRA_PROGRAMS = example
 
 example_SOURCES = main.c modules.c
 example_CFLAGS =				\

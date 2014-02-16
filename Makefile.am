@@ -10,3 +10,8 @@ pkgconfig_DATA = libextopts.pc
 $(OBJECTS): libtool
 libtool: $(LIBTOOL_DEPS)
 	$(SHELL) ./config.status --recheck
+
+example:
+	$(MAKE) -C example example
+
+.PHONY: example
