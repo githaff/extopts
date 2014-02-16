@@ -3,8 +3,8 @@ dnl Extopts library: advanced command line arguments parsing
 dnl ################################################################
 dnl # Initialize autoconf
 dnl ################################################################
-AC_INIT([Extopts library], [0.1], [haff@midgard.by], [extopts],
-        [https://github.com/githaff/extopts/wiki])
+AC_INIT([Extopts library], [1.0], [haff@midgard.by], [extopts],
+        [https://github.com/githaff/extopts])
 AC_PREREQ([2.69])
 
 AC_CONFIG_HEADERS([config.h])
