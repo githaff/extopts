@@ -14,33 +14,6 @@ AC_CONFIG_AUX_DIR([build-aux])
 
 
 dnl ################################################################
-dnl # Version information
-dnl ################################################################
-LIBEXTOPTS_MAJOR_VERSION=0
-LIBEXTOPTS_MINOR_VERSION=9
-LIBEXTOPTS_MICRO_VERSION=5
-LIBEXTOPTS_DEVEL_VERSION=0
-
-AC_SUBST(LIBEXTOPTS_MAJOR_VERSION)
-AC_SUBST(LIBEXTOPTS_MINOR_VERSION)
-AC_SUBST(LIBEXTOPTS_MICRO_VERSION)
-
-LIBEXTOPTS_VERSION=$LIBEXTOPTS_MAJOR_VERSION.$LIBEXTOPTS_MINOR_VERSION.$LIBEXTOPTS_MICRO_VERSION
-
-if test "x$LIBEXTOPTS_DEVEL_VERSION" != "x0"; then
-	LIBEXTOPTS_VERSION=$LIBEXTOPTS_VERSION.$LIBEXTOPTS_DEVEL_VERSION
-fi
-
-AC_DEFINE_UNQUOTED(LIBEXTOPTS_MAJOR_VERSION, $LIBEXTOPTS_MAJOR_VERSION,
-	[libextopts major version.])
-AC_DEFINE_UNQUOTED(LIBEXTOPTS_MINOR_VERSION, $LIBEXTOPTS_MINOR_VERSION,
-	[libextopts minor version.])
-AC_DEFINE_UNQUOTED(LIBEXTOPTS_MICRO_VERSION, $LIBEXTOPTS_MICRO_VERSION,
-	[libextopts micro version.])
-AC_DEFINE_UNQUOTED(LIBEXTOPTS_VERSION, "$LIBEXTOPTS_VERSION",
-	[libextopts version.])
-
-dnl ################################################################
 dnl # libtool versioning
 dnl ################################################################
 dnl #
