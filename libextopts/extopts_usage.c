@@ -4,6 +4,7 @@
 #include <stdbool.h>
 
 #include "extopts/extopts.h"
+#include "common.h"
 
 
 #define BUF_SIZE 1024
@@ -28,14 +29,12 @@ char desc_default[] = "no description specified";
 inline static bool option_is_ok(struct extopt *opt)
 {
 	if (!opt->name_short && !opt->name_long) {
-		fprintf(stderr,
-				"Error: option doesn't have nor short nor long name\n");
+		errmsg("option doesn't have nor short nor long name.\n");
 		return false;
 	}
 
 	if (opt->has_arg && !opt->arg_name) {
-		fprintf(stderr,
-				"Error: option has required argument but its name is not specified\n");
+		errmsg("option has required argument but its name is not specified.\n");
 		return false;
 	}
 

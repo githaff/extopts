@@ -3,12 +3,27 @@
 #include <string.h>
 #include <libgen.h>
 #include <stdbool.h>
+#include <stdarg.h>
 
 #include "extopts/extopts.h"
+#include "extopts/extmods.h"
 
 
 char *extname;
 char *extpath;
+
+/*
+ * Print error message
+ */
+void errmsg(const char *format, ...)
+{
+    va_list argptr;
+    va_start(argptr, format);
+	fprintf(stderr, "%s: ", extmodname[0] ? extmodname : extname);
+    vfprintf(stderr, format, argptr);
+    va_end(argptr);
+}
+
 
 /*
  * Check option for validity.
@@ -30,21 +45,21 @@ bool extopt_is_ok(struct extopt *opt)
 		opt_name = opt_name_reserved;
 
 	if (!opt->name_long && !opt->name_short) {
-		fprintf(stderr, "Error: '%s' extopt doesn't have any name.\n", opt_name);
+		errmsg("%s: '%s' extopt doesn't have any name.\n", opt_name);
 		ret = false;
 	}
 
 	if (opt->name_long) {
 		char *symb = strpbrk(opt->name_long, " ");
 		if (symb) {
-			fprintf(stderr, "Error: '%s' extopt has invalid character '%c' in long name.\n",
+			errmsg("%s: '%s' extopt has invalid character '%c' in long name.\n",
 					opt_name, *symb);
 			ret = false;
 		}
 	}
 
 	if (!opt->arg.addr) {
-		fprintf(stderr, "Error: '%s' extopt has unspecified argument value.\n", opt_name);
+		errmsg("%s: '%s' extopt has unspecified argument value.\n", opt_name);
 		ret = false;
 	}
 
@@ -74,7 +89,7 @@ bool extopts_all_is_ok(struct extopt *opts)
 
 	if (!check_helpopt) {
 		ret = false;
-		fprintf(stderr, "BUG: no --help|-h option is implemented.\n");
+		errmsg("no --help|-h option is implemented.\n");
 	}
 
 err:
@@ -368,8 +383,8 @@ int extopts_get(int *argc, char *argv[], struct extopt *opts)
 			if (opt)
 				wait_optarg = opt->has_arg;
 			else {
-				fprintf(stderr, "Error: unknown option '%s'.\n"
-						"Try --help for more information\n", optkey);
+				errmsg("unknown option '%s'.\n"
+						"Try --help for more information.\n", optkey);
 				ret = -1;
 				goto err;
 			}
@@ -381,8 +396,8 @@ int extopts_get(int *argc, char *argv[], struct extopt *opts)
 
 			ret = default_setter(opt, optarg);
 			if (ret) {
-				fprintf(stderr, "Error: parsing '%s' argument of parameter "
-						"'%s' (type %s) has failed\n",
+				errmsg("parsing '%s' argument of parameter "
+						"'%s' (type %s) has failed.\n",
 						optarg, optkey, get_argtype_name(opt->arg_type));
 				ret = -1;
 				goto err;
