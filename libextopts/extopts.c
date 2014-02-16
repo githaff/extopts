@@ -34,8 +34,17 @@ bool extopt_is_ok(struct extopt *opt)
 		ret = false;
 	}
 
+	if (opt->name_long) {
+		char *symb = strpbrk(opt->name_long, " ");
+		if (symb) {
+			fprintf(stderr, "Error: '%s' extopt has invalid character '%c' in long name.\n",
+					opt_name, *symb);
+			ret = false;
+		}
+	}
+
 	if (!opt->arg.addr) {
-		fprintf(stderr, "Error: '%s' extopt has unspecified argument value\n", opt_name);
+		fprintf(stderr, "Error: '%s' extopt has unspecified argument value.\n", opt_name);
 		ret = false;
 	}
 
