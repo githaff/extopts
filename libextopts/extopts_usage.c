@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 #include "extopts/extopts.h"
 
@@ -24,21 +25,21 @@ char desc_default[] = "no description specified";
 /*
  * Check options for validity.
  */
-inline static int validate_option(struct extopt *opt)
+inline static bool option_is_ok(struct extopt *opt)
 {
 	if (!opt->name_short && !opt->name_long) {
 		fprintf(stderr,
 				"Error: option doesn't have nor short nor long name\n");
-		return 1;
+		return false;
 	}
 
 	if (opt->has_arg && !opt->arg_name) {
 		fprintf(stderr,
 				"Error: option has required argument but its name is not specified\n");
-		return 1;
+		return false;
 	}
 
-	return 0;
+	return true;
 }
 
 
@@ -106,11 +107,11 @@ int get_opt_length(struct extopt *opt)
  * option with short name
  * Returns position from which descriptions must be written.
  */
-int get_desc_offset(struct extopt *opts, char *any_short)
+int get_desc_offset(struct extopt *opts, bool *any_short)
 {
 	int len, i;
 	int len_max = 0;
-	char any_long = 0;
+	bool any_long = 0;
 
 	*any_short = 0;
 
@@ -124,10 +125,10 @@ int get_desc_offset(struct extopt *opts, char *any_short)
 			len_max = len;
 
 		if (opts[i].name_long)
-			any_long = 1;
+			any_long = true;
 
 		if (opts[i].name_short)
-			*any_short = 1;
+			*any_short = true;
 
 		i++;
 	}
@@ -149,7 +150,7 @@ int get_desc_offset(struct extopt *opts, char *any_short)
  * @desc_offset_norm - normal offset with which description will be printed.
  * @any_short - there is at least one option with short name.
  */
-void print_opt(struct extopt *opt, int desc_offset_norm, char any_short)
+void print_opt(struct extopt *opt, int desc_offset_norm, bool any_short)
 {
 	char buf[BUF_SIZE];
 	int bufsize = BUF_SIZE;
@@ -157,7 +158,7 @@ void print_opt(struct extopt *opt, int desc_offset_norm, char any_short)
 	int desc_offset, desc_size;
 	int i;
 
-	if (validate_option(opt))
+	if (!option_is_ok(opt))
 		return;
 
 	/* Compose tabs */
@@ -227,7 +228,7 @@ void extopts_usage(struct extopt *opts)
 {
 	int i;
 	int desc_offset;
-	char any_short;
+	bool any_short;
 
 	desc_offset = get_desc_offset(opts, &any_short);
 

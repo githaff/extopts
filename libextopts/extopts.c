@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <libgen.h>
+#include <stdbool.h>
 
 #include "extopts/extopts.h"
 
@@ -14,9 +15,9 @@ char *extpath;
  * It is automatically preformed before parsing command line
  * arguments.
  */
-int extopt_is_ok(struct extopt *opt)
+bool extopt_is_ok(struct extopt *opt)
 {
-	int ret = 1;
+	bool ret = true;
 	char opt_name_reserved[] = "<unnamed>";
 	char *opt_name;
 
@@ -30,40 +31,40 @@ int extopt_is_ok(struct extopt *opt)
 
 	if (!opt->name_long && !opt->name_short) {
 		fprintf(stderr, "Error: '%s' extopt doesn't have any name.\n", opt_name);
-		ret = 0;
+		ret = false;
 	}
 
 	if (!opt->arg.addr) {
 		fprintf(stderr, "Error: '%s' extopt has unspecified argument value\n", opt_name);
-		ret = 0;
+		ret = false;
 	}
 
 	return ret;
 }
 
-int extopts_validate(struct extopt *opts)
+bool extopts_all_is_ok(struct extopt *opts)
 {
-	int ret = 0;
+	bool ret = true;
+	bool check_helpopt = false;
 	int i;
-	char check_helpopt = 0;
 
 	i = 0;
 	while (1) {
 		if (extopt_is_end(opts[i]))
 			break;
 		if (!extopt_is_ok(&opts[i])) {
-			ret = 1;
+			ret = false;
 			goto err;
 		}
 		if (opts[i].name_short == 'h' &&
 			!strcmp(opts[i].name_long, "help"))
-			check_helpopt = 1;
+			check_helpopt = true;
 
 		i++;
 	}
 
 	if (!check_helpopt) {
-		ret = 1;
+		ret = false;
 		fprintf(stderr, "BUG: no --help|-h option is implemented.\n");
 	}
 
@@ -230,7 +231,7 @@ int default_setter(struct extopt *opt, const char *arg)
 char *get_argtype_name(enum extopt_argtype argtype)
 {
 	switch(argtype) {
-	case EXTOPT_ARGTYPE_NO_ARG:	return "NO_ARG";
+	case EXTOPT_ARGTYPE_NO_ARG:		return "NO_ARG";
 	case EXTOPT_ARGTYPE_STR:		return "STR";
 	case EXTOPT_ARGTYPE_STR_ALLOC:	return "STR";
 	case EXTOPT_ARGTYPE_INT:		return "INT";
@@ -238,9 +239,9 @@ char *get_argtype_name(enum extopt_argtype argtype)
 	case EXTOPT_ARGTYPE_LLINT:		return "LLINT";
 	case EXTOPT_ARGTYPE_UINT:		return "INT";
 	case EXTOPT_ARGTYPE_ULINT:		return "ULINT";
-	case EXTOPT_ARGTYPE_ULLINT:	return "ULLINT";
+	case EXTOPT_ARGTYPE_ULLINT:		return "ULLINT";
 	case EXTOPT_ARGTYPE_FLOAT:		return "FLOAT";
-	case EXTOPT_ARGTYPE_DOUBLE:	return "DOUBLE";
+	case EXTOPT_ARGTYPE_DOUBLE:		return "DOUBLE";
 	case EXTOPT_ARGTYPE_LDOUBLE:	return "LDOUBLE";
 	case EXTOPT_ARGTYPE_CHAR:		return "CHAR";
 	case EXTOPT_ARGTYPE_SPECIAL:	return "SPECIAL";
@@ -307,7 +308,7 @@ end:
 	return opt;
 }
 
-char arg_is_key(char *arg)
+bool arg_is_key(char *arg)
 {
 	return arg[0] == '-';
 }
@@ -333,7 +334,7 @@ char arg_is_key(char *arg)
 int extopts_get(int *argc, char *argv[], struct extopt *opts)
 {
 	int ret = 0;
-	char wait_optarg = 0;
+	bool wait_optarg = false;
 	struct extopt *opt;
 	int i;
 	char *optkey;
@@ -343,7 +344,7 @@ int extopts_get(int *argc, char *argv[], struct extopt *opts)
 	extpath = argv[0];
 	extname = basename(argv[0]);
 
-	if (extopts_validate(opts)) {
+	if (!extopts_all_is_ok(opts)) {
 		ret = -1;
 		goto err;
 	}
@@ -377,7 +378,7 @@ int extopts_get(int *argc, char *argv[], struct extopt *opts)
 				ret = -1;
 				goto err;
 			}
-			wait_optarg = 0;
+			wait_optarg = false;
 		} else {
 			char *new_arg = argv[i];
 			int j;
