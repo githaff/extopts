@@ -20,19 +20,12 @@ int opts_special_setter(struct extopt *opt, const char *arg)
 
 struct extopt opts[] = {
 	{
-		.name_long = "help",
-		.name_short = 'h',
-		EXTOPT_NO_ARG(&opts_help),
-		.desc = "print this help",
-	}, {
-		.name_long = "version",
-		EXTOPT_NO_ARG(&opts_version),
-		.desc = "print program version",
-	}, {
 		.name_long = "special",
 		EXTOPT_ARG_SPECIAL("INT", &opts_special_setter),
 		.desc = "special option (takes integer and multiplies it on 2)",
 	},
+	EXTOPTS_HELP(&opts_help),
+	EXTOPTS_VERSION(&opts_version),
 	EXTOPTS_END
 };
 

@@ -83,8 +83,6 @@ struct extopt {
 	} arg;
 };
 
-/* Should be used as end of extopt array */
-#define EXTOPTS_END { 0, 0, 0, 0, 0, 0, {0} }
 
 /*
  * Macro for extopt struct initialization depending on option argument
@@ -169,6 +167,23 @@ struct extopt {
 	.arg_name = NAME,							\
 	.arg_type = EXTOPT_ARGTYPE_SPECIAL,			\
 	.arg.setter = SETTER_FUNC
+
+/* Useful */
+#define EXTOPTS_HELP(FLAG_ADDR) {				\
+	EXTOPT_NO_ARG(FLAG_ADDR),					\
+	.name_long = "help",						\
+	.name_short = 'h',							\
+	.desc = "display this help and exit"		\
+}
+#define EXTOPTS_VERSION(FLAG_ADDR) {				\
+	EXTOPT_NO_ARG(FLAG_ADDR),						\
+	.name_long = "version",							\
+	.desc = "output version information and exit"	\
+}
+
+
+/* Should be used as end of extopt array */
+#define EXTOPTS_END { 0, 0, 0, 0, 0, 0, {0} }
 
 /* Array functions */
 int extopts_get(int *argc, char *argv[], struct extopt *opts);

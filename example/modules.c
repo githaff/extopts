@@ -20,11 +20,6 @@ char opts_char;
 
 struct extopt int_opts[] = {
 	{
-		.name_long = "help",
-		.name_short = 'h',
-		EXTOPT_NO_ARG(&opts_help),
-		.desc = "print this help",
-	}, {
 		.name_long = "int",
 		.name_short = 'i',
 		EXTOPT_ARG_INT("INT", &opts_int),
@@ -38,16 +33,12 @@ struct extopt int_opts[] = {
 		EXTOPT_ARG_LLINT("LLINT", &opts_llint),
 		.desc = "long long int option",
 	},
+	EXTOPTS_HELP(&opts_help),
 	EXTOPTS_END
 };
 
 struct extopt uint_opts[] = {
 	{
-		.name_long = "help",
-		.name_short = 'h',
-		EXTOPT_NO_ARG(&opts_help),
-		.desc = "print this help",
-	}, {
 		.name_long = "uint",
 		.name_short = 'u',
 		EXTOPT_ARG_UINT("UINT", &opts_uint),
@@ -61,16 +52,12 @@ struct extopt uint_opts[] = {
 		EXTOPT_ARG_ULLINT("ULLINT", &opts_ullint),
 		.desc = "unsigned long long int option",
 	},
+	EXTOPTS_HELP(&opts_help),
 	EXTOPTS_END
 };
 
 struct extopt float_opts[] = {
 	{
-		.name_long = "help",
-		.name_short = 'h',
-		EXTOPT_NO_ARG(&opts_help),
-		.desc = "print this help",
-	}, {
 		.name_long = "float",
 		.name_short = 'f',
 		EXTOPT_ARG_FLOAT("FLOAT", &opts_float),
@@ -84,16 +71,12 @@ struct extopt float_opts[] = {
 		EXTOPT_ARG_LDOUBLE("LDOUBLE", &opts_ldouble),
 		.desc = "long double option",
 	},
+	EXTOPTS_HELP(&opts_help),
 	EXTOPTS_END
 };
 
 struct extopt str_opts[] = {
 	{
-		.name_long = "help",
-		.name_short = 'h',
-		EXTOPT_NO_ARG(&opts_help),
-		.desc = "print this help",
-	}, {
 		.name_long = "str",
 		EXTOPT_ARG_STR("STR", &opts_str),
 		.desc = "string option",
@@ -106,6 +89,7 @@ struct extopt str_opts[] = {
 		EXTOPT_ARG_CHAR("SYMBOL", &opts_char),
 		.desc = "single symbol option",
 	},
+	EXTOPTS_HELP(&opts_help),
 	EXTOPTS_END
 };
 
