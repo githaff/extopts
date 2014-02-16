@@ -2,7 +2,10 @@
 
 ACLOCAL_AMFLAGS = -I m4 ${ACLOCAL_FLAGS}
 
-SUBDIRS = libextopts example
+SUBDIRS = libextopts example include
+
+pkgconfigdir = $(libdir)/pkgconfig
+pkgconfig_DATA = libextopts.pc
 
 $(OBJECTS): libtool
 libtool: $(LIBTOOL_DEPS)
