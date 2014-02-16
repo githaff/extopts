@@ -1,4 +1,5 @@
 # Autotools
+/example/example
 /autom4te.cache
 /stamp-h1
 /config.status
@@ -20,6 +21,7 @@ build-aux/
 *.tar*
 *.zip
 *.lo
+*.pc
 .deps
 .libs
 \#*#
