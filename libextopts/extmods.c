@@ -1,32 +1,51 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
+#include <libgen.h>
 
 #include "extopts/extopts.h"
 #include "extopts/extmods.h"
 
-extern struct extmod __start___extmods[];
-extern struct extmod __stop___extmods[];
+
+struct extmod extmods[64];
+int extmods_num = 0;
+char extmodname[255];
 
 /*
  * Find extmodule with specified name.
  */
 struct extmod *extmod_find(char *name)
 {
-#if 0 /* BROKEN */
-	struct extmod *module = __start___extmods;
+	int i;
 
-	for (; module < __stop___extmods; module++) {
-		if (!strcmp(name, module->name))
-			return module;
+	for (i = 0; i < extmods_num; i++) {
+		if (!strcmp(name, extmods[i].name))
+			return &extmods[i];
 	}
-#endif
+
 	return 0;
 }
 
-int module_exec(int argc, char *argv[], struct extmod *module)
+int extmod_exec(int argc, char *argv[], struct extmod *module)
 {
-	if (module && module->exec)
-		return module->exec(argc, argv);
+	int argc_tmp;
+	char **argv_tmp;
+	int ret = 0;
+	int i;
 
-	return 1;
+	argc_tmp = argc - 1;
+	argv_tmp = (char **)calloc(argc_tmp, sizeof(char *));
+	argv_tmp[0] = argv[0];
+	for (i = 1; i < argc_tmp; i++)
+		argv_tmp[i] = argv[i + 1];
+
+	sprintf(extmodname, "%s-%s", basename(argv[0]), argv[1]);
+
+	if (module && module->exec)
+		ret = module->exec(argc_tmp, argv_tmp);
+
+	extmodname[0] = 0;
+	free(argv_tmp);
+
+	return ret;
 }

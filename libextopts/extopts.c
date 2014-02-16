@@ -8,7 +8,6 @@
 
 char *extname;
 char *extpath;
-char *extmodname;
 
 /*
  * Check option for validity.
@@ -341,13 +340,13 @@ int extopts_get(int *argc, char *argv[], struct extopt *opts)
 	char *optarg;
 	int argc_new = 0;
 
+	extpath = argv[0];
+	extname = basename(argv[0]);
+
 	if (extopts_validate(opts)) {
 		ret = -1;
 		goto err;
 	}
-
-	extpath = argv[0];
-	extname = basename(argv[0]);
 
 	empty_noargers(opts);
 
@@ -364,6 +363,9 @@ int extopts_get(int *argc, char *argv[], struct extopt *opts)
 				ret = -1;
 				goto err;
 			}
+
+			if (!wait_optarg)
+				ret = default_setter(opt, 0);
 		} else if (wait_optarg) {
 			optarg = argv[i];
 

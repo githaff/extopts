@@ -1,6 +1,6 @@
 bin_PROGRAMS = example
 
-example_SOURCES = main.c cmdargs.c
+example_SOURCES = main.c modules.c
 example_CFLAGS =				\
 	-std=c99 -Wpedantic -Wall -Wextra	\
 	-I$(top_srcdir)/include

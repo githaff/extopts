@@ -24,7 +24,6 @@
  */
 extern char *extname;
 extern char *extpath;
-extern char *extmodname;
 
 /*
  * Types of option argument.

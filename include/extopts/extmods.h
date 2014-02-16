@@ -12,23 +12,28 @@ struct extmod {
 	struct extopt *opts;
 };
 
-#define EXTMOD_DECL(NAME, EXEC, OPTS)	\
-	struct extmod extmod_##NAME = {		\
-		.name = #NAME,					\
-		.exec = EXEC, 					\
-		.opts = OPTS					\
-	};									\
-struct extmod extmod_##NAME __attribute((section("__extmods"), aligned(8)));
+#define EXTMOD_DECL(NAME, EXEC, OPTS)							\
+	struct extmod *extmod_##NAME;								\
+	void extmod_constr_##NAME() __attribute__ ((constructor));	\
+	void extmod_constr_##NAME()									\
+	{															\
+		extmod_##NAME = &extmods[extmods_num++];				\
+		extmod_##NAME->name = #NAME;							\
+		extmod_##NAME->exec = EXEC;								\
+		extmod_##NAME->opts = OPTS;								\
+	}
 
+extern struct extmod extmods[];
+extern int extmods_num;
+extern char extmodname[];
 
-inline static char mod_is_end(struct extmod opt)
+struct extmod *extmod_find(char *name);
+int extmod_exec(int argc, char *argv[], struct extmod *module);
+inline static char extmod_is_end(struct extmod opt)
 {
 	return opt.name == 0 &&
 		opt.opts == 0 &&
 		opt.exec == 0;
 }
-
-struct extmod *extmod_find(char *name);
-int module_exec(int argc, char *argv[], struct extmod *module);
 
 #endif /* __EXTMODS_H */
