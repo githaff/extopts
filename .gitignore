@@ -1,27 +1,11 @@
-# Autotools
-/example/example
-/autom4te.cache
-/stamp-h1
-/config.status
-/config.log
-/config.h
+### Project build results
+/build
+### CMake
+CMakeFiles
+CMakeCache.txt
+cmake_install.cmake
 Makefile
-libtool
-Makefile.in
-configure
-config.h.in
-aclocal.m4
-INSTALL
-build-aux/
-*~
-*.o
-*.la
-*.so*
-*.a
-*.tar*
-*.zip
-*.lo
-*.pc
-.deps
-.libs
+### Emacs temporary files
 \#*#
+### Misc
+*~
