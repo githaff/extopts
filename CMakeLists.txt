@@ -5,6 +5,10 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99 -O0 -g")
 # Set additional warnings
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wno-long-long -pedantic")
 
+### Library version
+set (VERSION_MAJOR 1)
+set (VERSION_MINOR 0)
+
 ### Name of whole complex
 set(PROJECT "extopts")
 project(${PROJECT})

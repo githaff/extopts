@@ -4,6 +4,8 @@ set(SOURCES_EXAMPLE
   main.c
   modules.c)
 
+configure_file ("config.h.in" "config.h")
+
 include_directories(${INCLUDE_DIR})
 
 add_executable(${PROJECT_EXAMPLE}
