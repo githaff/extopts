@@ -30,3 +30,34 @@ set(HEADERS_EXTERN
   ${INCLUDE_DIR}/${PROJECT}/extmods.h)
 
 add_subdirectory(${SRC_DIR})
+
+### Packaging setup
+include (InstallRequiredSystemLibraries)
+set (CPACK_PACKAGE_DESCRIPTION_SUMMARY "Extopts library")
+set (CPACK_PACKAGE_VENDOR "haff")
+set (CPACK_PACKAGE_DESCRIPTION_FILE "${CMAKE_CURRENT_SOURCE_DIR}/README")
+set (CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/COPYING")
+set (CPACK_PACKAGE_VERSION_MAJOR "${VERSION_MAJOR}")
+set (CPACK_PACKAGE_VERSION_MINOR "${VERSION_MINOR}")
+set (CPACK_SOURCE_GENERATOR "TGZ")
+set (CPACK_SOURCE_PACKAGE_FILE_NAME
+  "${CMAKE_PROJECT_NAME}-${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}")
+set (CPACK_SOURCE_IGNORE_FILES 
+  ".*~"
+  "#.*#"
+  ".*.tar.gz"
+  "/.git"
+  "/build"
+  "/_CPack_Packages"
+  ".gitignore"
+  "CMakeCache.txt"
+  "CMakeFiles"
+  "CPackConfig.cmake"
+  "CPackSourceConfig.cmake"
+  "Makefile"
+  "cmake_install.cmake"
+  "install_manifest.txt"
+)
+include (CPack)
+## Add alias to default 'dist' target
+add_custom_target(dist COMMAND ${CMAKE_MAKE_PROGRAM} package_source)
