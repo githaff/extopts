@@ -18,3 +18,7 @@ set_target_properties (${PROJECT}
 ### Example build
 #TODO: exclude from 'all' target
 add_subdirectory(${EXAMPLE_DIR})
+
+### Install rules
+install (TARGETS ${PROJECT} LIBRARY DESTINATION lib)
+install (FILES ${HEADERS_EXTERN} DESTINATION "include/${PROJECT}")
