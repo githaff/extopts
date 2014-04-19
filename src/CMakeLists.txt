@@ -16,8 +16,7 @@ set_target_properties (${PROJECT}
   LIBRARY_OUTPUT_DIRECTORY ${BUILD_DIR})
 
 ### Example build
-#TODO: exclude from 'all' target
-add_subdirectory(${EXAMPLE_DIR})
+add_subdirectory(${EXAMPLE_DIR} EXCLUDE_FROM_ALL)
 
 ### Install rules
 install (TARGETS ${PROJECT} LIBRARY DESTINATION lib)
