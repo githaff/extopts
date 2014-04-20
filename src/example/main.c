@@ -42,8 +42,7 @@ void print_usage(struct extopt *opts)
 
 void print_version()
 {
-	printf("extopts %d.%d example\n",
-		   EXTOPTS_VERSION_MAJOR, EXTOPTS_VERSION_MINOR);
+	printf("extopts %s example\n", EXTOPTS_VERSION_FULL);
 }
 
 

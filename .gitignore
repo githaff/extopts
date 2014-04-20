@@ -17,3 +17,4 @@ Makefile
 # generated distros
 /_CPack_Packages
 /extopts-*
+.version
