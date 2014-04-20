@@ -1,15 +1,15 @@
-set(EXAMPLE_DIR "${SRC_DIR}/example")
+set (EXAMPLE_DIR "${SRC_DIR}/example")
 
-set(SOURCES
+set (SOURCES
   extopts.c
   extmods.c
   usage.c)
-set(HEADERS
+set (HEADERS
   common.h)
 
-include_directories(${INCLUDE_DIR})
+include_directories (${INCLUDE_DIR})
 
-add_library(${PROJECT} SHARED
+add_library (${PROJECT} SHARED
   ${SOURCES} ${HEADERS} ${HEADERS_EXTERN})
 set_target_properties (${PROJECT}
   PROPERTIES
@@ -17,7 +17,7 @@ set_target_properties (${PROJECT}
   LIBRARY_OUTPUT_DIRECTORY ${BUILD_DIR})
 
 ### Example build
-add_subdirectory(${EXAMPLE_DIR} EXCLUDE_FROM_ALL)
+add_subdirectory (${EXAMPLE_DIR} EXCLUDE_FROM_ALL)
 
 ### Install rules
 install (TARGETS ${PROJECT} LIBRARY DESTINATION lib)

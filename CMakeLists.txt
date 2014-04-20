@@ -1,9 +1,9 @@
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required (VERSION 2.8)
 
 # Set compile parameters
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99 -O0 -g")
+set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99 -O0 -g")
 # Set additional warnings
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wno-long-long -pedantic")
+set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wno-long-long -pedantic")
 
 
 ### Extract current version from version control if present.
@@ -61,26 +61,26 @@ message ("EXTOPTS_VERSION='${EXTOPTS_VERSION}'")
 message ("EXTOPTS_VERSION_FULL='${EXTOPTS_VERSION_FULL}'")
 
 ### Name of whole complex
-set(PROJECT "extopts")
-project(${PROJECT})
+set (PROJECT "extopts")
+project (${PROJECT})
 
 ### Project directories
 ## Build product directories
-set(BUILD_DIR "${CMAKE_SOURCE_DIR}/build")
+set (BUILD_DIR "${CMAKE_SOURCE_DIR}/build")
 ## Sources
-set(SRC_DIR "${CMAKE_SOURCE_DIR}/src")
-set(INCLUDE_DIR "${CMAKE_SOURCE_DIR}/include")
+set (SRC_DIR "${CMAKE_SOURCE_DIR}/src")
+set (INCLUDE_DIR "${CMAKE_SOURCE_DIR}/include")
 
-if(NOT EXISTS "${BUILD_DIR}")
-  file(MAKE_DIRECTORY "${DOXROOT}")
+if (NOT EXISTS "${BUILD_DIR}")
+  file (MAKE_DIRECTORY "${BUILD_DIR}")
 endif()
 
 ### Public extopts library interface
-set(HEADERS_EXTERN
+set (HEADERS_EXTERN
   ${INCLUDE_DIR}/${PROJECT}/extopts.h
   ${INCLUDE_DIR}/${PROJECT}/extmods.h)
 
-add_subdirectory(${SRC_DIR})
+add_subdirectory (${SRC_DIR})
 
 ### Packaging setup
 include (InstallRequiredSystemLibraries)
@@ -112,4 +112,4 @@ set (CPACK_SOURCE_IGNORE_FILES
 )
 include (CPack)
 ## Add alias to default 'dist' target
-add_custom_target(dist COMMAND ${CMAKE_MAKE_PROGRAM} package_source)
+add_custom_target (dist COMMAND ${CMAKE_MAKE_PROGRAM} package_source)
