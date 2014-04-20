@@ -52,24 +52,15 @@ int main(int argc, char *argv[])
 	int ret = 0;
 	struct extmod *module = 0;
 
-	printf("Extopts+extmods example.\n");
-	printf("\n");
-	printf("Passed arguments list:\n");
-	for (i = 0; i < argc; i++)
-		printf("  %s\n", argv[i]);
-	printf("\n");
-
 	if (argc > 1)
 		module = extmod_find(argv[1]);
 
 	if (module)
 		ret = extmod_exec(argc, argv, module);
 	else {
-		printf("Parsing command line arguments...");
 		ret = extopts_get(&argc, argv, opts);
 		if (ret)
 			goto err;
-		printf("done\n");
 
 		if (opts_help) {
 			print_usage(opts);
@@ -85,6 +76,8 @@ int main(int argc, char *argv[])
 		printf("Arguments list after extopts parsing:\n");
 		for (i = 0; i < argc; i++)
 			printf("  %s\n", argv[i]);
+		if (i == 0)
+			printf("  --none--\n");
 		printf("\n");
 		printf("Configurable parameters list:\n");
 		printf("  opts_help = %d\n", opts_help);

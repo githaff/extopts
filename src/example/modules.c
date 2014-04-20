@@ -130,6 +130,8 @@ int common_output(int argc, char *argv[], struct extopt opts[])
 	printf("Arguments list after extopts parsing:\n");
 	for (i = 0; i < argc; i++)
 		printf("  %s\n", argv[i]);
+	if (i == 0)
+		printf("  --none--\n");
 	printf("\n");
 
 err:
