@@ -34,9 +34,12 @@ struct extopt opts[] = {
 void print_usage(struct extopt *opts)
 {
 	printf("Usage: %s [OPTIONS] COMMAND [COMMAND_OPTIONS]\n"
-		   "This is extopts test.\n"
-		   "\n"
-		   "Options:\n", extname);
+		   "This is extopts test.\n", extname);
+	printf("\n");
+	printf("Commands:\n");
+	extmods_usage_list();
+	printf("\n");
+	printf("Options:\n");
 	extopts_usage(opts);
 }
 

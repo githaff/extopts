@@ -4,6 +4,7 @@
 #include <stdbool.h>
 
 #include "extopts/extopts.h"
+#include "extopts/extmods.h"
 #include "common.h"
 
 
@@ -239,5 +240,66 @@ void extopts_usage(struct extopt *opts)
 		print_opt(opts + i, desc_offset, any_short);
 
 		i++;
+	}
+}
+
+/*
+ * Calculate offset for modules description.
+ */
+int get_mods_desc_offset()
+{
+	int offset;
+	int min_offset;
+	int max_modname = 0;
+	int i;
+
+	for (i = 0; i < extmods_num; i++)
+		if (max_modname < strlen(extmods[i].name))
+			max_modname = strlen(extmods[i].name);
+
+	min_offset = TAB_SIZE + max_modname + MIN_OPT_DESC_DIST;
+	offset = TAB_SIZE + max_modname + OPT_DESC_DIST;
+	if (offset > MAX_DESC_START) {
+		if (min_offset < MAX_DESC_START)
+			offset = MAX_DESC_START;
+		else
+			offset = min_offset;
+	}
+
+	return offset;
+}
+
+/*
+ * Prints list of modules with their descriptions.
+ */
+void extmods_usage_list(void)
+{
+	int i;
+	int offset;
+	int desc_offset;
+	int desc_size;
+	char buf[BUF_SIZE];
+	char *desc;
+
+	desc_offset = get_mods_desc_offset();
+
+	for (i = 0; i < extmods_num; i++) {
+		desc = extmods[i].desc;
+
+		/* Compose first line with module name */
+		for (offset = 0; offset < TAB_SIZE; offset++)
+			printf(" ");
+		printf("%s", extmods[i].name);
+		offset += strlen(extmods[i].name);
+
+		/* Print the rest of description */
+		desc_size = MAX_STRLEN - desc_offset;
+		while (desc && *desc) {
+			desc = get_subline(desc, buf, desc_size, BUF_SIZE);
+			for (; offset < desc_offset; offset++)
+				printf(" ");
+			printf("%s\n", buf);
+			offset = 0;
+		}
 	}
 }

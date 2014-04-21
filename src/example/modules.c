@@ -218,7 +218,15 @@ err:
 }
 
 
-EXTMOD_DECL(int, int_module, int_opts)
-EXTMOD_DECL(uint, uint_module, uint_opts)
-EXTMOD_DECL(float, float_module, float_opts)
-EXTMOD_DECL(str, str_module, str_opts)
+EXTMOD_DECL(int, int_module, int_opts,
+			"Testing integer arguments parsing "
+			"(int, long int, long long int)")
+EXTMOD_DECL(uint, uint_module, uint_opts,
+			"Testing unsigned integer arguments parsing "
+			"(uint, long uint, long long uint)")
+EXTMOD_DECL(float, float_module, float_opts,
+			"Testing floating point arguments parsing "
+			"(float, double, long double)")
+EXTMOD_DECL(str, str_module, str_opts,
+			"Testing string arguments parsing "
+			"(strings, pre-allocated strings, chars)")
