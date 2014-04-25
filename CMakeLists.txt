@@ -53,13 +53,6 @@ else ()
   endif ()
 endif ()
 
-message ("EXTOPTS_VERSION_MAJOR='${EXTOPTS_VERSION_MAJOR}'")
-message ("EXTOPTS_VERSION_MINOR='${EXTOPTS_VERSION_MINOR}'")
-message ("EXTOPTS_VERSION_PATCH='${EXTOPTS_VERSION_PATCH}'")
-message ("EXTOPTS_VERSION_DIRT='${EXTOPTS_VERSION_DIRT}'")
-message ("EXTOPTS_VERSION='${EXTOPTS_VERSION}'")
-message ("EXTOPTS_VERSION_FULL='${EXTOPTS_VERSION_FULL}'")
-
 ### Name of whole complex
 set (PROJECT "extopts")
 project (${PROJECT})
