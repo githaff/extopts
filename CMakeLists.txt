@@ -1,10 +1,14 @@
 cmake_minimum_required (VERSION 2.8)
 
+
+### Name of whole complex
+set (PROJECT "extopts")
+project (${PROJECT})
+
 # Set compile parameters
 set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99 -O0 -g")
 # Set additional warnings
 set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wno-long-long -pedantic")
-
 
 ### Extract current version from version control if present.
 ### If not - take from .version file
@@ -52,10 +56,6 @@ else ()
     set (EXTOPTS_VERSION_FULL "${EXTOPTS_VERSION}-${EXTOPTS_VERSION_DIRT}")
   endif ()
 endif ()
-
-### Name of whole complex
-set (PROJECT "extopts")
-project (${PROJECT})
 
 ### Project directories
 ## Build product directories
