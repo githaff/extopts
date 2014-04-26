@@ -1,4 +1,5 @@
 ### Project build results
+*.pc
 config.h
 /build
 ### CMake

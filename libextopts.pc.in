@@ -1,0 +1,10 @@
+prefix=@prefix@
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include/extopts
+
+Name: libextopts
+Description: Advanced command line arguments parser
+Version: @EXTOPTS_VERSION@
+Libs: -L${libdir} -lextopts
+Cflags: -I${includedir}

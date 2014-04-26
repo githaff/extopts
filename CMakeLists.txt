@@ -75,6 +75,11 @@ set (HEADERS_EXTERN
 
 add_subdirectory (${SRC_DIR})
 
+### Pkg-config generation
+set(prefix      ${CMAKE_INSTALL_PREFIX})
+configure_file(libextopts.pc.in libextopts.pc @ONLY)
+install (FILES libextopts.pc DESTINATION lib/pkgconfig)
+
 ### Packaging setup
 include (InstallRequiredSystemLibraries)
 set (CPACK_PACKAGE_DESCRIPTION_SUMMARY "Extopts library")
@@ -91,6 +96,7 @@ set (CPACK_SOURCE_IGNORE_FILES
   ".*~"
   "#.*#"
   ".*.tar.gz"
+  ".*.pc$"
   "/.git"
   "/build"
   "/_CPack_Packages"
