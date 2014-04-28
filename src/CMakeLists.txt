@@ -20,5 +20,5 @@ set_target_properties (${PROJECT}
 add_subdirectory (${EXAMPLE_DIR} EXCLUDE_FROM_ALL)
 
 ### Install rules
-install (TARGETS ${PROJECT} LIBRARY DESTINATION lib)
+install (TARGETS ${PROJECT} LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
 install (FILES ${HEADERS_EXTERN} DESTINATION "include/${PROJECT}")

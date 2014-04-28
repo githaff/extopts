@@ -67,6 +67,10 @@ set (INCLUDE_DIR "${CMAKE_SOURCE_DIR}/include")
 if (NOT EXISTS "${BUILD_DIR}")
   file (MAKE_DIRECTORY "${BUILD_DIR}")
 endif()
+## Installation paths if not specified
+if (NOT DEFINED CMAKE_INSTALL_LIBDIR)
+  set (CMAKE_INSTALL_LIBDIR lib)
+endif (NOT DEFINED CMAKE_INSTALL_LIBDIR)
 
 ### Public extopts library interface
 set (HEADERS_EXTERN
@@ -78,7 +82,8 @@ add_subdirectory (${SRC_DIR})
 ### Pkg-config generation
 set(prefix      ${CMAKE_INSTALL_PREFIX})
 configure_file(libextopts.pc.in libextopts.pc @ONLY)
-install (FILES libextopts.pc DESTINATION lib/pkgconfig)
+install (FILES libextopts.pc
+  DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig)
 
 ### Packaging setup
 include (InstallRequiredSystemLibraries)
