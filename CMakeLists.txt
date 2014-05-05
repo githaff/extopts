@@ -71,6 +71,7 @@ endif()
 if (NOT DEFINED CMAKE_INSTALL_LIBDIR)
   set (CMAKE_INSTALL_LIBDIR lib)
 endif (NOT DEFINED CMAKE_INSTALL_LIBDIR)
+set (CMAKE_INSTALL_CMAKEDIR "${CMAKE_INSTALL_LIBDIR}/cmake")
 
 ### Public extopts library interface
 set (HEADERS_EXTERN
@@ -80,10 +81,15 @@ set (HEADERS_EXTERN
 add_subdirectory (${SRC_DIR})
 
 ### Pkg-config generation
-set(prefix      ${CMAKE_INSTALL_PREFIX})
+set(prefix ${CMAKE_INSTALL_PREFIX})
 configure_file(libextopts.pc.in libextopts.pc @ONLY)
 install (FILES libextopts.pc
   DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig)
+
+### CMake find module generation
+configure_file(libextopts-config.cmake.in libextopts-config.cmake @ONLY)
+install (FILES libextopts-config.cmake
+  DESTINATION ${CMAKE_INSTALL_CMAKEDIR})
 
 ### Packaging setup
 include (InstallRequiredSystemLibraries)
