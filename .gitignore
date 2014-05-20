@@ -1,4 +1,6 @@
 ### Project build results
+*-config-version.cmake
+*-config.cmake
 *.pc
 config.h
 /build
