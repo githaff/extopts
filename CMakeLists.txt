@@ -24,7 +24,7 @@ else ()
 endif ()
 ## Parse version
 if ("${GIT_TAG_VERSION}" STREQUAL "")
-  message (WARNING "No version information was found!"
+  message (WARNING "No version information was found! "
     "Package should be built from correct source tree.")
   set (EXTOPTS_VERSION_MAJOR 0)
   set (EXTOPTS_VERSION_MINOR 0)
@@ -123,3 +123,6 @@ set (CPACK_SOURCE_IGNORE_FILES
 include (CPack)
 ## Add alias to default 'dist' target
 add_custom_target (dist COMMAND ${CMAKE_MAKE_PROGRAM} package_source)
+
+### Install rules
+install (FILES ${HEADERS_EXTERN} DESTINATION "include/${PROJECT}")
