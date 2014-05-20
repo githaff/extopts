@@ -1,11 +1,6 @@
-get_filename_component(LIBSSH_CMAKE_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
+# - Config file for the extopts package
+get_filename_component(EXTOPTS_CMAKE_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
 
-if (EXISTS "${LIBSSH_CMAKE_DIR}/CMakeCache.txt")
-    # In build tree
-    include(${LIBSSH_CMAKE_DIR}/libssh-build-tree-settings.cmake)
-else()
-    set(LIBSSH_INCLUDE_DIR @INCLUDE_INSTALL_DIR@)
-endif()
-
-set(LIBSSH_LIRBARY @LIB_INSTALL_DIR@/libssh.so)
-set(LIBSSH_LIRBARIES @LIB_INSTALL_DIR@/libssh.so)
+set(EXTOPTS_INCLUDE_DIR @EXTOPTS_INCLUDE_DIR@)
+set(EXTOPTS_LIRBARY @EXTOPTS_LIB_DIR@/libextopts.so)
+set(EXTOPTS_LIRBARIES @EXTOPTS_LIB_DIR@/libextopts.so)

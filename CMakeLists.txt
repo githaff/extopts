@@ -69,9 +69,15 @@ if (NOT EXISTS "${BUILD_DIR}")
 endif()
 ## Installation paths if not specified
 if (NOT DEFINED CMAKE_INSTALL_LIBDIR)
-  set (CMAKE_INSTALL_LIBDIR lib)
+  set (CMAKE_INSTALL_LIBDIR "lib")
 endif (NOT DEFINED CMAKE_INSTALL_LIBDIR)
+if (NOT DEFINED CMAKE_INSTALL_INCLUDEDIR)
+  set (CMAKE_INSTALL_INCLUDEDIR "include")
+endif (NOT DEFINED CMAKE_INSTALL_INCLUDEDIR)
 set (CMAKE_INSTALL_CMAKEDIR "${CMAKE_INSTALL_LIBDIR}/cmake")
+## Paths for *-config.cmake file
+set (EXTOPTS_INCLUDE_DIR "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_INCLUDEDIR}")
+set (EXTOPTS_LIB_DIR "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}")
 
 ### Public extopts library interface
 set (HEADERS_EXTERN
@@ -88,7 +94,10 @@ install (FILES libextopts.pc
 
 ### CMake find module generation
 configure_file(libextopts-config.cmake.in libextopts-config.cmake @ONLY)
+configure_file(libextopts-config-version.cmake.in libextopts-config-version.cmake @ONLY)
 install (FILES libextopts-config.cmake
+  DESTINATION ${CMAKE_INSTALL_CMAKEDIR})
+install (FILES libextopts-config-version.cmake
   DESTINATION ${CMAKE_INSTALL_CMAKEDIR})
 
 ### Packaging setup
@@ -125,4 +134,4 @@ include (CPack)
 add_custom_target (dist COMMAND ${CMAKE_MAKE_PROGRAM} package_source)
 
 ### Install rules
-install (FILES ${HEADERS_EXTERN} DESTINATION "include/${PROJECT}")
+install (FILES ${HEADERS_EXTERN} DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT}")
