@@ -74,7 +74,7 @@ endif (NOT DEFINED CMAKE_INSTALL_LIBDIR)
 if (NOT DEFINED CMAKE_INSTALL_INCLUDEDIR)
   set (CMAKE_INSTALL_INCLUDEDIR "include")
 endif (NOT DEFINED CMAKE_INSTALL_INCLUDEDIR)
-set (CMAKE_INSTALL_CMAKEDIR "${CMAKE_INSTALL_LIBDIR}/cmake")
+set (CMAKE_INSTALL_CMAKEDIR "${CMAKE_INSTALL_LIBDIR}/${PROJECT}")
 ## Paths for *-config.cmake file
 set (EXTOPTS_INCLUDE_DIR "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_INCLUDEDIR}")
 set (EXTOPTS_LIB_DIR "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}")
@@ -88,16 +88,16 @@ add_subdirectory (${SRC_DIR})
 
 ### Pkg-config generation
 set(prefix ${CMAKE_INSTALL_PREFIX})
-configure_file(libextopts.pc.in libextopts.pc @ONLY)
-install (FILES libextopts.pc
+configure_file(extopts.pc.in extopts.pc @ONLY)
+install (FILES extopts.pc
   DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig)
 
 ### CMake find module generation
-configure_file(libextopts-config.cmake.in libextopts-config.cmake @ONLY)
-configure_file(libextopts-config-version.cmake.in libextopts-config-version.cmake @ONLY)
-install (FILES libextopts-config.cmake
+configure_file(extopts-config.cmake.in extopts-config.cmake @ONLY)
+configure_file(extopts-config-version.cmake.in extopts-config-version.cmake @ONLY)
+install (FILES extopts-config.cmake
   DESTINATION ${CMAKE_INSTALL_CMAKEDIR})
-install (FILES libextopts-config-version.cmake
+install (FILES extopts-config-version.cmake
   DESTINATION ${CMAKE_INSTALL_CMAKEDIR})
 
 ### Packaging setup
