@@ -73,3 +73,16 @@ void extmod_print_opts(struct extmod *module)
 	if (module->opts)
 		extopts_usage(module->opts);
 }
+
+char extmod_has_name(struct extmod *module)
+{ return module->name ? 1 : 0; }
+char extmod_has_desc(struct extmod *module)
+{ return module->desc ? 1 : 0; }
+char extmod_has_opts(struct extmod *module)
+{ return module->opts ? 1 : 0; }
+char extmod_is_end(struct extmod opt)
+{
+	return opt.name == 0 &&
+		opt.opts == 0 &&
+		opt.exec == 0;
+}
