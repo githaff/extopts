@@ -284,7 +284,7 @@ void extmods_usage_list(void)
 	desc_offset = get_mods_desc_offset();
 
 	for (i = 0; i < extmods_num; i++) {
-		desc = extmods[i].desc;
+		desc = extmods[i].desc_short;
 
 		/* Compose first line with module name */
 		for (offset = 0; offset < TAB_SIZE; offset++)

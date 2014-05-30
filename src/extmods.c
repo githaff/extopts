@@ -59,10 +59,10 @@ int extmod_exec(int argc, char *argv[], struct extmod *module)
  */
 void extmod_print_desc(struct extmod *module)
 {
-	if (module->desc_long)
-		puts(module->desc_long);
+	if (module->desc)
+		puts(module->desc);
 	else
-		printf("--no description for %s module--\n", module->name);
+		puts("--no module description--");
 }
 
 /*
