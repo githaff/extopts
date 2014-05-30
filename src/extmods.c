@@ -26,6 +26,10 @@ struct extmod *extmod_find(char *name)
 	return 0;
 }
 
+/*
+ * Execute module with passing rest of arguments as if it was runned
+ * from simple main() function.
+ */
 int extmod_exec(int argc, char *argv[], struct extmod *module)
 {
 	int argc_tmp;
@@ -50,6 +54,9 @@ int extmod_exec(int argc, char *argv[], struct extmod *module)
 	return ret;
 }
 
+/*
+ * Print module description.
+ */
 void extmod_print_desc(struct extmod *module)
 {
 	if (module->desc_long)

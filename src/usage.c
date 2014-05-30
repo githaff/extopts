@@ -246,7 +246,7 @@ void extopts_usage(struct extopt *opts)
 /*
  * Calculate offset for modules description.
  */
-int get_mods_desc_offset()
+int get_mods_desc_offset(void)
 {
 	int offset;
 	int min_offset;
