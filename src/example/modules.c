@@ -220,13 +220,13 @@ err:
 
 EXTMOD_DECL(int, int_module, int_opts,
 			"Testing integer arguments parsing "
-			"(int, long int, long long int)")
+			"(int, long int, long long int)", NULL)
 EXTMOD_DECL(uint, uint_module, uint_opts,
 			"Testing unsigned integer arguments parsing "
-			"(uint, long uint, long long uint)")
+			"(uint, long uint, long long uint)", NULL)
 EXTMOD_DECL(float, float_module, float_opts,
 			"Testing floating point arguments parsing "
-			"(float, double, long double)")
+			"(float, double, long double)", NULL)
 EXTMOD_DECL(str, str_module, str_opts,
 			"Testing string arguments parsing "
-			"(strings, pre-allocated strings, chars)")
+			"(strings, pre-allocated strings, chars)", NULL)

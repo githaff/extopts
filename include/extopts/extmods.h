@@ -11,9 +11,10 @@ struct extmod {
 	int (*exec)(int argc, char *argv[]);
 	struct extopt *opts;
 	char *desc;
+	char *desc_long;
 };
 
-#define EXTMOD_DECL(NAME, EXEC, OPTS, DESC)						\
+#define EXTMOD_DECL(NAME, EXEC, OPTS, DESC, DESC_LONG)			\
 	struct extmod *extmod_##NAME;								\
 	void extmod_constr_##NAME() __attribute__ ((constructor));	\
 	void extmod_constr_##NAME()									\
@@ -23,6 +24,7 @@ struct extmod {
 		extmod_##NAME->exec = EXEC;								\
 		extmod_##NAME->opts = OPTS;								\
 		extmod_##NAME->desc = DESC;								\
+		extmod_##NAME->desc_long = DESC_LONG;					\
 	}
 
 extern struct extmod extmods[];
@@ -31,6 +33,7 @@ extern char extmodname[];
 
 struct extmod *extmod_find(char *name);
 int extmod_exec(int argc, char *argv[], struct extmod *module);
+void extmod_print_desc(struct extmod *module);
 inline static char extmod_is_end(struct extmod opt)
 {
 	return opt.name == 0 &&
