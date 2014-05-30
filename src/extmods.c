@@ -64,3 +64,12 @@ void extmod_print_desc(struct extmod *module)
 	else
 		printf("--no description for %s module--\n", module->name);
 }
+
+/*
+ * Print module options.
+ */
+void extmod_print_opts(struct extmod *module)
+{
+	if (module->opts)
+		extopts_usage(module->opts);
+}

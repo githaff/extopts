@@ -34,6 +34,8 @@ extern char extmodname[];
 struct extmod *extmod_find(char *name);
 int extmod_exec(int argc, char *argv[], struct extmod *module);
 void extmod_print_desc(struct extmod *module);
+void extmod_print_opts(struct extmod *module);
+
 inline static char extmod_is_end(struct extmod opt)
 {
 	return opt.name == 0 &&
