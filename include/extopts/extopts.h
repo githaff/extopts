@@ -173,12 +173,12 @@ struct extopt {
 	EXTOPT_NO_ARG(FLAG_ADDR),					\
 	.name_long = "help",						\
 	.name_short = 'h',							\
-	.desc = "display this help and exit"		\
+	.desc = "print this help and exit"			\
 }
 #define EXTOPTS_VERSION(FLAG_ADDR) {				\
 	EXTOPT_NO_ARG(FLAG_ADDR),						\
 	.name_long = "version",							\
-	.desc = "output version information and exit"	\
+	.desc = "print version information and exit"	\
 }
 
 
