@@ -33,15 +33,15 @@ if ("${GIT_TAG_VERSION}" STREQUAL "")
   set (EXTOPTS_VERSION_FULL "unknown")
 else ()
   execute_process (COMMAND echo "${GIT_TAG_VERSION}"
-    COMMAND sed -ne "s/^v\\([[:digit:]]\\)\\..*/\\1/p"
+    COMMAND sed -ne "s/^v\\([[:digit:]]*\\)\\..*/\\1/p"
     OUTPUT_VARIABLE EXTOPTS_VERSION_MAJOR
     OUTPUT_STRIP_TRAILING_WHITESPACE)
   execute_process (COMMAND echo "${GIT_TAG_VERSION}"
-    COMMAND sed -ne "s/^v[[:digit:]]\\.\\([[:digit:]]\\)\\..*/\\1/p"
+    COMMAND sed -ne "s/^v[[:digit:]]*\\.\\([[:digit:]]*\\)\\..*/\\1/p"
     OUTPUT_VARIABLE EXTOPTS_VERSION_MINOR
     OUTPUT_STRIP_TRAILING_WHITESPACE)
   execute_process (COMMAND echo "${GIT_TAG_VERSION}"
-    COMMAND sed -ne "s/^v[[:digit:]]\\.[[:digit:]]\\.\\([[:digit:]]\\).*/\\1/p"
+    COMMAND sed -ne "s/^v[[:digit:]]*\\.[[:digit:]]*\\.\\([[:digit:]]*\\).*/\\1/p"
     OUTPUT_VARIABLE EXTOPTS_VERSION_PATCH
     OUTPUT_STRIP_TRAILING_WHITESPACE)
   execute_process (COMMAND echo "${GIT_TAG_VERSION}"
