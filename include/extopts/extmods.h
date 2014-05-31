@@ -29,6 +29,7 @@ struct extmod {
 
 extern struct extmod extmods[];
 extern int extmods_num;
+extern struct extmod *extmod;
 extern char extmodname[];
 
 struct extmod *extmod_find(char *name);

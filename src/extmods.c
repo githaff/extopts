@@ -10,6 +10,7 @@
 struct extmod extmods[64];
 int extmods_num = 0;
 char extmodname[255];
+struct extmod *extmod;
 
 /*
  * Find extmodule with specified name.
@@ -43,12 +44,14 @@ int extmod_exec(int argc, char *argv[], struct extmod *module)
 	for (i = 1; i < argc_tmp; i++)
 		argv_tmp[i] = argv[i + 1];
 
+	extmod = module;
 	sprintf(extmodname, "%s-%s", basename(argv[0]), argv[1]);
 
 	if (module && module->exec)
 		ret = module->exec(argc_tmp, argv_tmp);
 
 	extmodname[0] = 0;
+	extmod = 0;
 	free(argv_tmp);
 
 	return ret;
