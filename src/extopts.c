@@ -68,32 +68,16 @@ bool extopt_is_ok(struct extopt *opt)
 
 bool extopts_all_is_ok(struct extopt *opts)
 {
-	bool ret = true;
-	bool check_helpopt = false;
-	int i;
+	int i = 0;
 
-	i = 0;
-	while (1) {
-		if (extopt_is_end(opts[i]))
-			break;
+	while (!extopt_is_end(opts[i])) {
 		if (!extopt_is_ok(&opts[i])) {
-			ret = false;
-			goto err;
+			return false;
 		}
-		if (opts[i].name_short == 'h' &&
-			!strcmp(opts[i].name_long, "help"))
-			check_helpopt = true;
-
 		i++;
 	}
 
-	if (!check_helpopt) {
-		ret = false;
-		errmsg("no --help|-h option is implemented.\n");
-	}
-
-err:
-	return ret;
+	return true;
 }
 
 /*
