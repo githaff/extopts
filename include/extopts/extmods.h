@@ -33,7 +33,9 @@ extern struct extmod *extmod;
 extern char extmodname[];
 
 struct extmod *extmod_find(char *name);
+struct extmod *extmod_extract(int *argc, char *argv[]);
 int extmod_exec(int argc, char *argv[], struct extmod *module);
+
 void extmod_print_desc(struct extmod *module);
 void extmod_print_opts(struct extmod *module);
 

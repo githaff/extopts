@@ -14,6 +14,41 @@ int extmods_num = 0;
 char extmodname[255];
 struct extmod *extmod;
 
+
+
+/*
+ * Extract module name from command line arguments.
+ * Module name in:
+ *   argv[0] - leave arguments unchanged;
+ *   argv[1] - remove this argument.
+ * If no module was found than for sanity better check if execname is correct.
+ * It would be strange if some utility called with unexpected name will act
+ * like usual.
+ */
+struct extmod *extmod_extract(int *argcp, char *argv[])
+{
+	struct extmod *module;
+	char *execname;
+	int argc = *argcp;
+	int i;
+
+	execname = basename(argv[0]);
+
+	module = extmod_find(execname);
+	if (!module && argc > 1) {
+		module = extmod_find(argv[1]);
+		if (module)
+		{
+			argc--;
+			for (i = 1; i < argc; i++)
+				argv[i] = argv[i+1];
+			*argcp = argc;
+		}
+	}
+
+	return module;
+}
+
 /*
  * Find extmodule with specified name.
  */
@@ -35,26 +70,21 @@ struct extmod *extmod_find(char *name)
  */
 int extmod_exec(int argc, char *argv[], struct extmod *module)
 {
-	int argc_tmp;
-	char **argv_tmp;
+	char *execname;
 	int ret = 0;
-	int i;
 
-	argc_tmp = argc - 1;
-	argv_tmp = (char **)calloc(argc_tmp, sizeof(char *));
-	argv_tmp[0] = argv[0];
-	for (i = 1; i < argc_tmp; i++)
-		argv_tmp[i] = argv[i + 1];
+	if (!module)
+		return 1;
 
+	execname = basename(argv[0]);
 	extmod = module;
-	sprintf(extmodname, "%s-%s", basename(argv[0]), argv[1]);
+	sprintf(extmodname, "%s-%s", execname, module->name);
 
-	if (module && module->exec)
-		ret = module->exec(argc_tmp, argv_tmp);
+	if (module->exec)
+		ret = module->exec(argc, argv);
 
 	extmodname[0] = 0;
 	extmod = 0;
-	free(argv_tmp);
 
 	return ret;
 }
