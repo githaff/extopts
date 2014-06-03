@@ -6,6 +6,8 @@
 #include "extopts/extopts.h"
 #include "extopts/extmods.h"
 
+#define EXTMODS_OPTS_STR "[[OPTIONS]]"
+
 
 struct extmod extmods[64];
 int extmods_num = 0;
@@ -59,13 +61,35 @@ int extmod_exec(int argc, char *argv[], struct extmod *module)
 
 /*
  * Print module description.
+ * Replaces options keyword with module options printed with
+ * extmod_print_opts()
  */
 void extmod_print_desc(struct extmod *module)
 {
-	if (module->desc)
-		puts(module->desc);
+	int desc_len;
+	char *buf;
+	char *opts_str;
+
+	if (module->desc) {
+		desc_len = strlen(module->desc);
+		buf = (char *)malloc(desc_len + 1);
+		strcpy(buf, module->desc);
+
+		opts_str = strstr(buf, EXTMODS_OPTS_STR);
+		if (opts_str) {
+			*opts_str = 0;
+			printf(buf);
+			extmod_print_opts(module);
+			opts_str += strlen(EXTMODS_OPTS_STR);
+			puts(opts_str);
+		}
+		else
+			puts(module->desc);
+
+		free(buf);
+	}
 	else
-		puts("--no module description--");
+		puts("No description");
 }
 
 /*
