@@ -290,7 +290,7 @@ struct extopt *extopt_find(char *opt_str, struct extopt *opts)
 		while (1) {
 			if (extopt_is_end(opts[i]))
 				break;
-			if (!strcmp(opt_str + 2, opts[i].name_long)) {
+			if (opts[i].name_long && !strcmp(opt_str + 2, opts[i].name_long)) {
 				opt = &opts[i];
 				break;
 			}
