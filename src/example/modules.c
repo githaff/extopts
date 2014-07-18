@@ -4,7 +4,7 @@
 #include "extopts/extmods.h"
 
 
-int opts_help;
+bool	opts_help;
 int		opts_int;
 long		opts_lint;
 long long	opts_llint;

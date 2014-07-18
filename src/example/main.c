@@ -8,8 +8,9 @@
 
 
 /* Options */
-int opts_help;
-int opts_version;
+bool opts_flag;
+bool opts_help;
+bool opts_version;
 int opts_special_val;
 int opts_special_setter(struct extopt *opt, const char *arg)
 {
@@ -25,6 +26,11 @@ struct extopt opts[] = {
 		.name_long = "special",
 		EXTOPT_ARG_SPECIAL("INT", &opts_special_setter),
 		.desc = "special option (takes integer and multiplies it on 2)",
+	}, {
+		.name_long = "flag",
+		.name_short = 'f',
+		EXTOPT_NO_ARG(&opts_flag),
+		.desc = "boolean flag",
 	},
 	EXTOPTS_HELP(&opts_help),
 	EXTOPTS_VERSION(&opts_version),
@@ -86,8 +92,8 @@ int main(int argc, char *argv[])
 		printf("  opts_help = %d\n", opts_help);
 		printf("  opts_version = %d\n", opts_version);
 		printf("  opts_special_val = %d\n", opts_special_val);
+		printf("  opts_flag = %s\n", opts_flag ? "true" : "false");
 	}
-
 
 err:
 end:

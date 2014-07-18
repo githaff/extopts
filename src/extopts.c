@@ -202,7 +202,7 @@ int default_setter(struct extopt *opt, const char *arg)
 		opt->arg.setter(opt, arg);
 		break;
 	case EXTOPT_ARGTYPE_NO_ARG:
-		*opt->arg.flag_addr = 1;
+		*opt->arg.flag = true;
 		break;
 	case EXTOPT_ARGTYPE_STR:
 		*opt->arg.const_str = arg;
@@ -270,7 +270,7 @@ void empty_noargers(struct extopt *opts)
 			break;
 
 		if (opts[i].arg_type == EXTOPT_ARGTYPE_NO_ARG)
-			*opts[i].arg.flag_addr = 0;
+			*opts[i].arg.flag = false;
 
 		i++;
 	}

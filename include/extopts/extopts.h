@@ -17,6 +17,8 @@
 #ifndef __EXTOPTS_H
 #define __EXTOPTS_H
 
+#include <stdbool.h>
+
 /*
  * Application name and path (taken from argv[0] during parsing).
  * Module name (taken from argv[1] if arguments are passed to
@@ -78,7 +80,7 @@ struct extopt {
 	union {
 		void *addr;
 		const char **const_str;
-		int *flag_addr;
+		bool *flag;
 		int (*setter)(struct extopt *opt, const char *arg);
 	} arg;
 };
@@ -161,7 +163,7 @@ struct extopt {
 	.has_arg = no_extarg,					\
 	.arg_name = NULL,						\
 	.arg_type = EXTOPT_ARGTYPE_NO_ARG,		\
-	.arg.flag_addr = FLAG_ADDR
+	.arg.flag = FLAG_ADDR
 #define EXTOPT_ARG_SPECIAL(NAME, SETTER_FUNC)	\
 	.has_arg = required_extarg,					\
 	.arg_name = NAME,							\
