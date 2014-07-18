@@ -19,6 +19,7 @@
 *.pc
 config.h
 /build
+
 ### CMake
 CMakeFiles
 CMakeCache.txt
@@ -27,10 +28,13 @@ CPackSourceConfig.cmake
 install_manifest.txt
 cmake_install.cmake
 Makefile
+
 ### Emacs temporary files
 \#*#
+
 ### Misc
 *~
+
 ### Generated files
 # generated distros
 /_CPack_Packages
