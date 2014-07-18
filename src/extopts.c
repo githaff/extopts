@@ -207,9 +207,6 @@ int default_setter(struct extopt *opt, const char *arg)
 	case EXTOPT_ARGTYPE_STR:
 		*opt->arg.const_str = arg;
 		break;
-	case EXTOPT_ARGTYPE_STR_ALLOC:
-		strcpy(opt->arg.addr, arg);
-		break;
 	case EXTOPT_ARGTYPE_INT:
 	case EXTOPT_ARGTYPE_LINT:
 	case EXTOPT_ARGTYPE_LLINT:
@@ -241,7 +238,6 @@ char *get_argtype_name(enum extopt_argtype argtype)
 	switch(argtype) {
 	case EXTOPT_ARGTYPE_NO_ARG:		return "NO_ARG";
 	case EXTOPT_ARGTYPE_STR:		return "STR";
-	case EXTOPT_ARGTYPE_STR_ALLOC:	return "STR";
 	case EXTOPT_ARGTYPE_INT:		return "INT";
 	case EXTOPT_ARGTYPE_LINT:		return "LINT";
 	case EXTOPT_ARGTYPE_LLINT:		return "LLINT";

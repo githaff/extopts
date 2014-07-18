@@ -15,7 +15,6 @@ float		opts_float;
 double		opts_double;
 long double	opts_ldouble;
 const char *opts_str;
-char opts_alloc_str[256];
 char opts_char;
 
 struct extopt int_opts[] = {
@@ -80,10 +79,6 @@ struct extopt str_opts[] = {
 		.name_long = "str",
 		EXTOPT_ARG_STR("STR", &opts_str),
 		.desc = "string option",
-	}, {
-		.name_long = "str-alloc",
-		EXTOPT_ARG_STR_ALLOC("STR", &opts_alloc_str),
-		.desc = "allocated string option",
 	}, {
 		.name_long = "char",
 		EXTOPT_ARG_CHAR("SYMBOL", &opts_char),
@@ -210,7 +205,6 @@ int str_module(int argc, char *argv[])
 
 	printf("Configurable parameters list:\n");
 	printf("  opts_str = %s\n", opts_str);
-	printf("  opts_alloc_str = %s\n", opts_alloc_str);
 	printf("  opts_char = %c\n", opts_char);
 
 err:
@@ -229,4 +223,4 @@ EXTMOD_DECL(float, float_module, float_opts,
 			"(float, double, long double)", NULL)
 EXTMOD_DECL(str, str_module, str_opts,
 			"Testing string arguments parsing "
-			"(strings, pre-allocated strings, chars)", NULL)
+			"(strings, chars)", NULL)

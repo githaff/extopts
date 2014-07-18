@@ -56,7 +56,6 @@ enum extopt_argtype {
 	EXTOPT_ARGTYPE_LDOUBLE,
 	/* Strings */
 	EXTOPT_ARGTYPE_STR,		/* Field 'const_str' is used instead of 'addr' */
-	EXTOPT_ARGTYPE_STR_ALLOC,
 	EXTOPT_ARGTYPE_CHAR,
 };
 
@@ -147,11 +146,6 @@ struct extopt {
 	.arg_name = NAME,						\
 	.arg_type = EXTOPT_ARGTYPE_STR,			\
 	.arg.const_str = ADDR
-#define EXTOPT_ARG_STR_ALLOC(NAME, ADDR)	\
-	.has_arg = required_extarg,				\
-	.arg_name = NAME,						\
-	.arg_type = EXTOPT_ARGTYPE_STR_ALLOC,	\
-	.arg.addr = ADDR
 #define EXTOPT_ARG_CHAR(NAME, ADDR)			\
 	.has_arg = required_extarg,				\
 	.arg_name = NAME,						\
