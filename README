@@ -1,8 +1,0 @@
-This is C library for advanced command line arguments parsing.
-
-Main features:
-* declarative interface;
-* automated usage output generation;
-* native modules support.
-
-See https://github.com/githaff/extopts/wiki for more information.
