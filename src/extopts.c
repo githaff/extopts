@@ -9,8 +9,8 @@
 #include "extopts/extmods.h"
 
 
-char *extname;
-char *extpath;
+const char *extname;
+const char *extpath;
 
 /*
  * Print error message

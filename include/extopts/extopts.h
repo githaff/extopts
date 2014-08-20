@@ -24,8 +24,8 @@
  * Module name (taken from argv[1] if arguments are passed to
  * extmod_exec).
  */
-extern char *extname;
-extern char *extpath;
+extern const char *extname;
+extern const char *extpath;
 
 /*
  * Types of option argument.
