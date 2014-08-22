@@ -59,11 +59,6 @@ enum extopt_argtype {
 	EXTOPT_ARGTYPE_CHAR,
 };
 
-enum {
-	no_extarg,
-	required_extarg,
-};
-
 /*
  * Extended option description structure.
  */
@@ -73,7 +68,7 @@ struct extopt {
 	char *desc;
 
 	/* Option argument */
-	int has_arg;
+	bool has_arg;
 	char *arg_name;
 	enum extopt_argtype arg_type;
 	union {
@@ -91,75 +86,75 @@ struct extopt {
  */
 /* Signed integers */
 #define EXTOPT_ARG_INT(NAME, ADDR)			\
-	.has_arg = required_extarg,				\
+	.has_arg = true,						\
 	.arg_name = NAME,						\
 	.arg_type = EXTOPT_ARGTYPE_INT,			\
 	.arg.addr = ADDR
 #define EXTOPT_ARG_LINT(NAME, ADDR)			\
-	.has_arg = required_extarg,				\
+	.has_arg = true,						\
 	.arg_name = NAME,						\
 	.arg_type = EXTOPT_ARGTYPE_LINT,		\
 	.arg.addr = ADDR
 #define EXTOPT_ARG_LLINT(NAME, ADDR)		\
-	.has_arg = required_extarg,				\
+	.has_arg = true,						\
 	.arg_name = NAME,						\
 	.arg_type = EXTOPT_ARGTYPE_LLINT,		\
 	.arg.addr = ADDR
 
 /* Unsigned integers */
 #define EXTOPT_ARG_UINT(NAME, ADDR)			\
-	.has_arg = required_extarg,				\
+	.has_arg = true,						\
 	.arg_name = NAME,						\
 	.arg_type = EXTOPT_ARGTYPE_UINT,		\
 	.arg.addr = ADDR
 #define EXTOPT_ARG_ULINT(NAME, ADDR)		\
-	.has_arg = required_extarg,				\
+	.has_arg = true,						\
 	.arg_name = NAME,						\
 	.arg_type = EXTOPT_ARGTYPE_ULINT,		\
 	.arg.addr = ADDR
 #define EXTOPT_ARG_ULLINT(NAME, ADDR)		\
-	.has_arg = required_extarg,				\
+	.has_arg = true,						\
 	.arg_name = NAME,						\
 	.arg_type = EXTOPT_ARGTYPE_ULLINT,		\
 	.arg.addr = ADDR
 
 /* Floating-point */
 #define EXTOPT_ARG_FLOAT(NAME, ADDR)		\
-	.has_arg = required_extarg,				\
+	.has_arg = true,						\
 	.arg_name = NAME,						\
 	.arg_type = EXTOPT_ARGTYPE_FLOAT,		\
 	.arg.addr = ADDR
 #define EXTOPT_ARG_DOUBLE(NAME, ADDR)		\
-	.has_arg = required_extarg,				\
+	.has_arg = true,						\
 	.arg_name = NAME,						\
 	.arg_type = EXTOPT_ARGTYPE_DOUBLE,		\
 	.arg.addr = ADDR
 #define EXTOPT_ARG_LDOUBLE(NAME, ADDR)		\
-	.has_arg = required_extarg,				\
+	.has_arg = true,						\
 	.arg_name = NAME,						\
 	.arg_type = EXTOPT_ARGTYPE_LDOUBLE,		\
 	.arg.addr = ADDR
 
 /* Strings */
 #define EXTOPT_ARG_STR(NAME, ADDR)			\
-	.has_arg = required_extarg,				\
+	.has_arg = true,						\
 	.arg_name = NAME,						\
 	.arg_type = EXTOPT_ARGTYPE_STR,			\
 	.arg.const_str = ADDR
 #define EXTOPT_ARG_CHAR(NAME, ADDR)			\
-	.has_arg = required_extarg,				\
+	.has_arg = true,						\
 	.arg_name = NAME,						\
 	.arg_type = EXTOPT_ARGTYPE_CHAR,		\
 	.arg.addr = ADDR
 
 /* Misc */
 #define EXTOPT_NO_ARG(FLAG_ADDR)			\
-	.has_arg = no_extarg,					\
+	.has_arg = false,						\
 	.arg_name = NULL,						\
 	.arg_type = EXTOPT_ARGTYPE_NO_ARG,		\
 	.arg.flag = FLAG_ADDR
 #define EXTOPT_ARG_SPECIAL(NAME, SETTER_FUNC)	\
-	.has_arg = required_extarg,					\
+	.has_arg = true,							\
 	.arg_name = NAME,							\
 	.arg_type = EXTOPT_ARGTYPE_SPECIAL,			\
 	.arg.setter = SETTER_FUNC
