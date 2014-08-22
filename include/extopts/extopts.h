@@ -35,7 +35,7 @@ extern const char *extpath;
 enum extopt_argtype {
 	/* Field 'arg' will be used as 'flag' pointing to flag for whether
 	 * parameter was met in command line or not */
-	EXTOPT_ARGTYPE_NO_ARG,
+	EXTOPT_ARGTYPE_NO_ARG = 0,
 	/* Field 'arg' will be used as 'setter' handler which will be
 	 * called for argument parsing */
 	EXTOPT_ARGTYPE_SPECIAL,
@@ -174,7 +174,18 @@ struct extopt {
 
 
 /* Should be used as end of extopt array */
-#define EXTOPTS_END { 0, 0, 0, 0, 0, 0, {0} }
+#define EXTOPTS_END								\
+	{											\
+		.name_long = NULL,						\
+		.name_short = 0,						\
+		.desc = NULL,							\
+		.has_arg = false,						\
+		.arg_name = NULL,						\
+		.arg_type = EXTOPT_ARGTYPE_NO_ARG,		\
+		.arg = {								\
+			.addr = NULL,						\
+		},										\
+	}
 
 /* Array functions */
 int extopts_get(int *argc, char *argv[], struct extopt *opts);
@@ -183,13 +194,13 @@ struct extopt *extopt_find(char *opt_str, struct extopt *opts);
 /* Single extopt functions*/
 inline static char extopt_is_end(struct extopt opt)
 {
-	return opt.name_long == 0 &&
+	return opt.name_long == NULL &&
 		opt.name_short	== 0 &&
-		opt.has_arg		== 0 &&
-		opt.arg_name	== 0 &&
-		opt.desc		== 0 &&
+		opt.has_arg		== false &&
+		opt.arg_name	== NULL &&
+		opt.desc		== NULL &&
 		opt.arg_type	== 0 &&
-		opt.arg.addr	== 0;
+		opt.arg.addr	== NULL;
 }
 
 #endif /* __EXTOPTS_H */
