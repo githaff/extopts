@@ -1,4 +1,4 @@
-set (PROJECT_EXAMPLE "example")
+set (PROJECT_EXAMPLE_DYNAMIC "example")
 set (PROJECT_EXAMPLE_STATIC "example_static")
 
 set (SOURCES_EXAMPLE
@@ -8,14 +8,13 @@ set (SOURCES_EXAMPLE
 configure_file ("config.h.in" "config.h")
 
 include_directories (${INCLUDE_DIR})
-
-add_executable (${PROJECT_EXAMPLE}
+add_executable (${PROJECT_EXAMPLE_DYNAMIC}
   ${SOURCES_EXAMPLE}
   ${HEADERS_EXTERN})
-set_target_properties (${PROJECT_EXAMPLE}
+set_target_properties (${PROJECT_EXAMPLE_DYNAMIC}
   PROPERTIES
   RUNTIME_OUTPUT_DIRECTORY ${BUILD_DIR})
-target_link_libraries (${PROJECT_EXAMPLE} ${PROJECT})
+target_link_libraries (${PROJECT_EXAMPLE_DYNAMIC} ${BUILD_DIR}/libextopts.so)
 
 add_executable (${PROJECT_EXAMPLE_STATIC}
   ${SOURCES_EXAMPLE}
@@ -23,4 +22,4 @@ add_executable (${PROJECT_EXAMPLE_STATIC}
 set_target_properties (${PROJECT_EXAMPLE_STATIC}
   PROPERTIES
   RUNTIME_OUTPUT_DIRECTORY ${BUILD_DIR})
-target_link_libraries (${PROJECT_EXAMPLE_STATIC} ${PROJECT}.a)
+target_link_libraries (${PROJECT_EXAMPLE_STATIC} ${BUILD_DIR}/libextopts.a)
