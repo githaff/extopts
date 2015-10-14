@@ -6,8 +6,8 @@ endif()
 
 ### Name of whole complex
 set (PROJECT "extopts")
-set (LIB_DYN "${PROJECT}_dynamic")
-set (LIB_STAT "${PROJECT}_static")
+set (LIB_DYN "dynamic")
+set (LIB_STAT "static")
 project (${PROJECT})
 
 # Set compile parameters
