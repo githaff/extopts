@@ -19,11 +19,13 @@ set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wno-long-long -pedantic")
 ### If not - take from .version file
 if (EXISTS "${CMAKE_SOURCE_DIR}/.git")
   execute_process (COMMAND git describe
+    WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
     OUTPUT_VARIABLE GIT_TAG_VERSION)
   file (WRITE .version "${GIT_TAG_VERSION}")
 else ()
   if (EXISTS "${CMAKE_SOURCE_DIR}/.version")
     execute_process (COMMAND cat .version
+      WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
       OUTPUT_VARIABLE GIT_TAG_VERSION)
   endif ()
 endif ()
