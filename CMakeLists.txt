@@ -29,7 +29,17 @@ else ()
       OUTPUT_VARIABLE GIT_TAG_VERSION)
   endif ()
 endif ()
-## Parse version
+
+### Parse version
+execute_process (COMMAND echo "${GIT_TAG_VERSION}"
+  COMMAND grep -E "^v[0-9][0-9]*\\.[0-9][0-9]*(-.*)?$"
+  OUTPUT_STRIP_TRAILING_WHITESPACE
+  OUTPUT_VARIABLE VERSION_TYPE_2)
+execute_process (COMMAND echo "${GIT_TAG_VERSION}"
+  COMMAND grep -E "^v[0-9][0-9]*\\.[0-9][0-9]*\\.[0-9][0-9]*(-.*)?$"
+  OUTPUT_STRIP_TRAILING_WHITESPACE
+  OUTPUT_VARIABLE VERSION_TYPE_3)
+
 if ("${GIT_TAG_VERSION}" STREQUAL "")
   message (WARNING "No version information was found! "
     "Package should be built from correct source tree.")
@@ -44,19 +54,26 @@ else ()
     OUTPUT_VARIABLE EXTOPTS_VERSION_MAJOR
     OUTPUT_STRIP_TRAILING_WHITESPACE)
   execute_process (COMMAND echo "${GIT_TAG_VERSION}"
-    COMMAND sed -ne "s/^v[[:digit:]]*\\.\\([[:digit:]]*\\)\\..*/\\1/p"
+    COMMAND sed -ne "s/^v[[:digit:]]*\\.\\([[:digit:]]*\\).*/\\1/p"
     OUTPUT_VARIABLE EXTOPTS_VERSION_MINOR
     OUTPUT_STRIP_TRAILING_WHITESPACE)
+  if (VERSION_TYPE_3)
+    execute_process (COMMAND echo "${GIT_TAG_VERSION}"
+      COMMAND sed -ne "s/^v[[:digit:]]*\\.[[:digit:]]*\\.\\([[:digit:]]*\\).*/\\1/p"
+      OUTPUT_VARIABLE EXTOPTS_VERSION_PATCH
+      OUTPUT_STRIP_TRAILING_WHITESPACE)
+  endif ()
   execute_process (COMMAND echo "${GIT_TAG_VERSION}"
-    COMMAND sed -ne "s/^v[[:digit:]]*\\.[[:digit:]]*\\.\\([[:digit:]]*\\).*/\\1/p"
-    OUTPUT_VARIABLE EXTOPTS_VERSION_PATCH
-    OUTPUT_STRIP_TRAILING_WHITESPACE)
-  execute_process (COMMAND echo "${GIT_TAG_VERSION}"
-    COMMAND sed -ne "s/.*-\\(.*\\)/\\1/p"
+    COMMAND sed -ne "s/[^-]*-\\(.*\\)/\\1/p"
     OUTPUT_VARIABLE EXTOPTS_VERSION_DIRT
     OUTPUT_STRIP_TRAILING_WHITESPACE)
 
-  set (EXTOPTS_VERSION "${EXTOPTS_VERSION_MAJOR}.${EXTOPTS_VERSION_MINOR}.${EXTOPTS_VERSION_PATCH}")
+  if (VERSION_TYPE_3)
+    set (EXTOPTS_VERSION "${EXTOPTS_VERSION_MAJOR}.${EXTOPTS_VERSION_MINOR}.${EXTOPTS_VERSION_PATCH}")
+  else ()
+    set (EXTOPTS_VERSION "${EXTOPTS_VERSION_MAJOR}.${EXTOPTS_VERSION_MINOR}")
+  endif ()
+
   if (EXTOPTS_VERSION_DIRT STREQUAL "")
     set (EXTOPTS_VERSION_FULL "${EXTOPTS_VERSION}")
   else ()
