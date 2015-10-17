@@ -15,73 +15,9 @@ set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99 -O0 -g")
 # Set additional warnings
 set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wno-long-long -pedantic")
 
-### Extract current version from version control if present.
-### If not - take from .version file
-if (EXISTS "${CMAKE_SOURCE_DIR}/.git")
-  execute_process (COMMAND git describe
-    WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
-    OUTPUT_VARIABLE GIT_TAG_VERSION)
-  file (WRITE .version "${GIT_TAG_VERSION}")
-else ()
-  if (EXISTS "${CMAKE_SOURCE_DIR}/.version")
-    execute_process (COMMAND cat .version
-      WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
-      OUTPUT_VARIABLE GIT_TAG_VERSION)
-  endif ()
-endif ()
-
-### Parse version
-execute_process (COMMAND echo "${GIT_TAG_VERSION}"
-  COMMAND grep -E "^v[0-9][0-9]*\\.[0-9][0-9]*(-.*)?$"
-  OUTPUT_STRIP_TRAILING_WHITESPACE
-  OUTPUT_VARIABLE VERSION_TYPE_2)
-execute_process (COMMAND echo "${GIT_TAG_VERSION}"
-  COMMAND grep -E "^v[0-9][0-9]*\\.[0-9][0-9]*\\.[0-9][0-9]*(-.*)?$"
-  OUTPUT_STRIP_TRAILING_WHITESPACE
-  OUTPUT_VARIABLE VERSION_TYPE_3)
-
-if ("${GIT_TAG_VERSION}" STREQUAL "")
-  message (WARNING "No version information was found! "
-    "Package should be built from correct source tree.")
-  set (EXTOPTS_VERSION_MAJOR 0)
-  set (EXTOPTS_VERSION_MINOR 0)
-  set (EXTOPTS_VERSION_PATCH 0)
-  set (EXTOPTS_VERSION "0.0.0")
-  set (EXTOPTS_VERSION_FULL "unknown")
-else ()
-  execute_process (COMMAND echo "${GIT_TAG_VERSION}"
-    COMMAND sed -ne "s/^v\\([[:digit:]]*\\)\\..*/\\1/p"
-    OUTPUT_VARIABLE EXTOPTS_VERSION_MAJOR
-    OUTPUT_STRIP_TRAILING_WHITESPACE)
-  execute_process (COMMAND echo "${GIT_TAG_VERSION}"
-    COMMAND sed -ne "s/^v[[:digit:]]*\\.\\([[:digit:]]*\\).*/\\1/p"
-    OUTPUT_VARIABLE EXTOPTS_VERSION_MINOR
-    OUTPUT_STRIP_TRAILING_WHITESPACE)
-  if (VERSION_TYPE_3)
-    execute_process (COMMAND echo "${GIT_TAG_VERSION}"
-      COMMAND sed -ne "s/^v[[:digit:]]*\\.[[:digit:]]*\\.\\([[:digit:]]*\\).*/\\1/p"
-      OUTPUT_VARIABLE EXTOPTS_VERSION_PATCH
-      OUTPUT_STRIP_TRAILING_WHITESPACE)
-  endif ()
-  execute_process (COMMAND echo "${GIT_TAG_VERSION}"
-    COMMAND sed -ne "s/[^-]*-\\(.*\\)/\\1/p"
-    OUTPUT_VARIABLE EXTOPTS_VERSION_DIRT
-    OUTPUT_STRIP_TRAILING_WHITESPACE)
-
-  if (VERSION_TYPE_3)
-    set (EXTOPTS_VERSION "${EXTOPTS_VERSION_MAJOR}.${EXTOPTS_VERSION_MINOR}.${EXTOPTS_VERSION_PATCH}")
-  else ()
-    set (EXTOPTS_VERSION "${EXTOPTS_VERSION_MAJOR}.${EXTOPTS_VERSION_MINOR}")
-  endif ()
-
-  if (EXTOPTS_VERSION_DIRT STREQUAL "")
-    set (EXTOPTS_VERSION_FULL "${EXTOPTS_VERSION}")
-  else ()
-    set (EXTOPTS_VERSION_FULL "${EXTOPTS_VERSION}-${EXTOPTS_VERSION_DIRT}")
-  endif ()
-endif ()
-
 ### Project directories
+## CMake modules
+set (CMAKE_MODULE_PATH "cmake")
 ## Build product directories
 set (BUILD_DIR "${CMAKE_SOURCE_DIR}/build")
 ## Sources
@@ -107,6 +43,10 @@ set (EXTOPTS_LIB_DIR "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}")
 set (HEADERS_EXTERN
   ${INCLUDE_DIR}/${PROJECT}/extopts.h
   ${INCLUDE_DIR}/${PROJECT}/extmods.h)
+
+### Extract version numbers
+include (git-version)
+git_version_extract (EXTOPTS)
 
 add_subdirectory (${SRC_DIR})
 
