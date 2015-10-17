@@ -17,7 +17,7 @@ set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wno-long-long -pedantic")
 
 ### Project directories
 ## CMake modules
-set (CMAKE_MODULE_PATH "cmake")
+set (CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 ## Build product directories
 set (BUILD_DIR "${CMAKE_SOURCE_DIR}/build")
 ## Sources
