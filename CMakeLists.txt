@@ -11,7 +11,7 @@ set (LIB_STAT "static")
 project (${PROJECT})
 
 # Set compile parameters
-set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99 -O0 -g")
+set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99")
 # Set additional warnings
 set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wno-long-long -pedantic")
 
