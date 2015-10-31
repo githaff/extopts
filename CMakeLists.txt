@@ -4,9 +4,13 @@ if (NOT DEFINED CMAKE_MACOSX_RPATH)
   set(CMAKE_MACOSX_RPATH 0)
 endif()
 
+option (DISABLE_SHARED "Disable shared library build" OFF)
+
 ### Name of whole complex
 set (PROJECT "extopts")
-set (LIB_DYN "dynamic")
+if (NOT ${DISABLE_SHARED})
+  set (LIB_DYN "dynamic")
+endif ()
 set (LIB_STAT "static")
 project (${PROJECT})
 
