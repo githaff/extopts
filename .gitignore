@@ -4,6 +4,7 @@
 *.a
 *.s
 *.so
+*.so.*
 *.so.dbg
 *.gz
 *.bz2
@@ -18,7 +19,6 @@
 *-config.cmake
 *.pc
 config.h
-/build
 
 ### CMake
 CMakeFiles
