@@ -14,6 +14,5 @@ add_executable (${PROJECT_EXAMPLE}
 add_dependencies(${PROJECT_EXAMPLE} ${LIB_STAT})
 set_target_properties (${PROJECT_EXAMPLE}
   PROPERTIES
-  OUTPUT_NAME "example"
-  RUNTIME_OUTPUT_DIRECTORY ${BUILD_DIR})
+  OUTPUT_NAME "example")
 target_link_libraries (${PROJECT_EXAMPLE} ${LIB_STAT})

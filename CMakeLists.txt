@@ -22,15 +22,10 @@ set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wno-long-long -pedantic")
 ### Project directories
 ## CMake modules
 set (CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
-## Build product directories
-set (BUILD_DIR "${CMAKE_SOURCE_DIR}/build")
 ## Sources
 set (SRC_DIR "${CMAKE_SOURCE_DIR}/src")
 set (INCLUDE_DIR "${CMAKE_SOURCE_DIR}/include")
 
-if (NOT EXISTS "${BUILD_DIR}")
-  file (MAKE_DIRECTORY "${BUILD_DIR}")
-endif()
 ## Installation paths if not specified
 if (NOT DEFINED CMAKE_INSTALL_LIBDIR)
   set (CMAKE_INSTALL_LIBDIR "lib")
