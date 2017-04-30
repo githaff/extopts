@@ -6,7 +6,9 @@ set (SOURCES_EXAMPLE
 
 configure_file ("config.h.in" "config.h")
 
-include_directories (${INCLUDE_DIR})
+include_directories (
+  ${INCLUDE_DIR}
+  ${CMAKE_CURRENT_BINARY_DIR})
 
 add_executable (${PROJECT_EXAMPLE}
   ${SOURCES_EXAMPLE}
