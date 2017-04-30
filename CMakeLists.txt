@@ -52,15 +52,15 @@ add_subdirectory (${SRC_DIR})
 ### Pkg-config generation
 set(prefix ${CMAKE_INSTALL_PREFIX})
 configure_file(extopts.pc.in extopts.pc @ONLY)
-install (FILES extopts.pc
+install (FILES ${CMAKE_CURRENT_BINARY_DIR}/extopts.pc
   DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig)
 
 ### CMake find module generation
 configure_file(extopts-config.cmake.in extopts-config.cmake @ONLY)
 configure_file(extopts-config-version.cmake.in extopts-config-version.cmake @ONLY)
-install (FILES extopts-config.cmake
+install (FILES ${CMAKE_CURRENT_BINARY_DIR}/extopts-config.cmake
   DESTINATION ${CMAKE_INSTALL_CMAKEDIR})
-install (FILES extopts-config-version.cmake
+install (FILES ${CMAKE_CURRENT_BINARY_DIR}/extopts-config-version.cmake
   DESTINATION ${CMAKE_INSTALL_CMAKEDIR})
 
 ### Packaging setup
