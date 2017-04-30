@@ -34,7 +34,7 @@ bool extopt_is_ok(struct extopt *opt)
 {
 	bool ret = true;
 	char opt_name_reserved[] = "<unnamed>";
-	char *opt_name;
+	char *opt_name = 0;
 
 	if (opt->name_long && *opt->name_long)
 		opt_name = opt->name_long;
@@ -339,9 +339,9 @@ int extopts_get(int *argc, char *argv[], struct extopt *opts)
 {
 	int ret = 0;
 	bool wait_optarg = false;
-	struct extopt *opt;
+	struct extopt *opt = 0;
 	int i;
-	char *optkey;
+	char *optkey = 0;
 	char *optarg;
 	int argc_new = 0;
 
