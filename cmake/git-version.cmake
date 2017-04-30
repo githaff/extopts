@@ -30,7 +30,7 @@ macro (git_version_extract NAME)
     COMMAND grep -E "^v[0-9][0-9]*\\.[0-9][0-9]*\\.[0-9][0-9]*(-.*)?$"
     OUTPUT_STRIP_TRAILING_WHITESPACE
     OUTPUT_VARIABLE VERSION_TYPE_3)
-  
+
   if ("${GIT_TAG_VERSION}" STREQUAL "")
     message (WARNING "No version information was found! "
       "Package should be built from correct source tree.")
